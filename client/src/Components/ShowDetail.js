@@ -4,7 +4,7 @@ import defaultImg from "../assets/defaultImage.jpg";
 
 const ShowDetail = ({ show }) => {
   const [url, setUrl] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     async function fetchUrl() {
@@ -17,7 +17,7 @@ const ShowDetail = ({ show }) => {
       }
     }
     fetchUrl();
-  }, [show]);
+  }, []);
 
   console.dir(data);
 
@@ -29,8 +29,8 @@ const ShowDetail = ({ show }) => {
         <img src={defaultImg} alt="defaultimg"></img>
       )}
       <Typography>{data.name}</Typography>
-      <Typography>{data.schedule.time}</Typography>
-      <Typography>{data.rating.average}</Typography>
+      {/* <Typography>{data?.schedule?.time}</Typography>
+      <Typography>{data.rating.average}</Typography> */}
       {/* <h1>{data.rating.average}</h1> */}
       {/* <p>{data.network.name}</p> */}
       {/*       {data.genres.map(genre => {

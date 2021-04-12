@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   showImage: {
     border: "2px solid black",
     margin: "5px",
-    //width: "210px",
+    width: "210px",
   },
 }));
 
@@ -40,6 +40,8 @@ const Fetch = () => {
     }
     fetchUrl();
   }, [url]);
+
+  console.log(url);
 
   return (
     <div>
@@ -75,7 +77,6 @@ const Fetch = () => {
             </div>
           ))}
       </div>
-      {show && <ShowDetail show={show} />}
     </div>
   );
 };
