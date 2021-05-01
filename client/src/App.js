@@ -9,9 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-/*     boxSizing: "border-box",
-    margin: 0,
-    padding: 0, */
     background: "#333533",
     height: "100vh",
     overflowX: "hidden",
