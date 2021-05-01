@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@material-ui/core";
+
 import defaultImg from "../assets/defaultImage.jpg";
 
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    //background: "#3F51B5",
+  },
+}));
+
 const ShowDetail = ({ show }) => {
-  const [url, setUrl] = useState("");
+  const classes = useStyles();
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -17,25 +26,28 @@ const ShowDetail = ({ show }) => {
       }
     }
     fetchUrl();
-  }, []);
-
-  console.dir(data);
+  }, [show]);
 
   return (
-    <div>
+    <div className={classes.root}>
       {data.image ? (
         <img src={data.image.medium} alt="img" />
       ) : (
         <img src={defaultImg} alt="defaultimg"></img>
       )}
-      <Typography>{data.name}</Typography>
-      {/* <Typography>{data?.schedule?.time}</Typography>
-      <Typography>{data.rating.average}</Typography> */}
-      {/* <h1>{data.rating.average}</h1> */}
-      {/* <p>{data.network.name}</p> */}
-      {/*       {data.genres.map(genre => {
-        <Typography>{genre}</Typography>
-      })} */}
+
+      {!data.length > 0 && (
+        <>
+          <Typography>{data.name}</Typography>
+          {data.genres &&
+            data?.genres.map((genre) => {
+              return <ul>{genre}</ul>;
+            })}
+          <Typography>{data?.rating?.average}</Typography>
+          <h1>{data?.rating?.average}</h1>
+          <p>{data?.network?.name}</p>
+        </>
+      )}
     </div>
   );
 };

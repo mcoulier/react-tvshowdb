@@ -1,10 +1,14 @@
-import Fetch from "../src/Components/Fetch";
+import React from "react";
+
+import Fetch from "./Components/Fetch";
+import Header from "./Components/Header";
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <Header />
       <Fetch />
-    </div>
+    </>
   );
 }
 

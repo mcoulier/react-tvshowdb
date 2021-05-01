@@ -5,6 +5,9 @@ import defaultImg from "../assets/defaultImage.jpg";
 import ShowDetail from "./ShowDetail";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#333533",
+  },
   showList: {
     display: "flex",
     flexFlow: "row wrap",
@@ -26,8 +29,6 @@ const Fetch = () => {
   );
   const classes = useStyles();
 
-  //console.log(show);
-
   useEffect(() => {
     async function fetchUrl() {
       try {
@@ -41,10 +42,10 @@ const Fetch = () => {
     fetchUrl();
   }, [url]);
 
-  console.log(url);
+  //console.log(show);
 
   return (
-    <div>
+    <div className={classes.root}>
       <form
         onSubmit={(e) => {
           setUrl(`http://api.tvmaze.com/search/shows?q=${query}`);
@@ -53,11 +54,16 @@ const Fetch = () => {
       >
         <TextField
           style={{ margin: 8 }}
+          label="Enter name of show"
           fullWidth
           type="text"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button type="submit" variant="contained">
+        <Button
+          style={{ backgroundColor: "#f5cb5c" }}
+          type="submit"
+          variant="contained"
+        >
           Search
         </Button>
       </form>
@@ -77,6 +83,7 @@ const Fetch = () => {
             </div>
           ))}
       </div>
+      <>{show && <ShowDetail show={show} />}</>
     </div>
   );
 };
