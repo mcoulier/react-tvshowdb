@@ -3,18 +3,20 @@ import { Button, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import defaultImg from "../assets/defaultImage.jpg";
 import ShowDetail from "./ShowDetail";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#333533",
   },
   showList: {
+    margin: "20px",
+    padding: "10px",
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "center",
   },
   showImage: {
-    border: "2px solid black",
     margin: "5px",
     width: "210px",
   },
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Fetch = () => {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  const [show, setShow] = useState("");
+  const [showId, setShowId] = useState("");
   const [url, setUrl] = useState(
     "http://api.tvmaze.com/search/shows?q=the+wire"
   );
@@ -70,20 +72,21 @@ const Fetch = () => {
       <div className={classes.showList}>
         {data &&
           data.map((show, index) => (
-            <div
-              className={classes.showImage}
-              onClick={() => setShow(show.show.id)}
-            >
+            <div className={classes.showImage} key={show.show.id}>
               {show.show.image ? (
-                <img src={show.show.image.medium} alt="img" />
+                <Link to={`/shows/${show.show.id}`}>
+                  <img src={show.show.image.medium} alt="img" />
+                </Link>
               ) : (
-                <img src={defaultImg} alt="defaultimg"></img>
+                <Link to={`/shows/${show.show.id}`}>
+                  <img src={defaultImg} alt="defaultimg"></img>
+                </Link>
               )}
               <Typography>{show.show.name}</Typography>
             </div>
           ))}
       </div>
-      <>{show && <ShowDetail show={show} />}</>
+      <>{showId && <ShowDetail />}</>
     </div>
   );
 };

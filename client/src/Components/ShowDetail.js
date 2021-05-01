@@ -5,20 +5,28 @@ import defaultImg from "../assets/defaultImage.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
+import { useParams } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    //background: "#3F51B5",
+    border: "1px solid black",
+  },
+  detail: {
+    border: "1px solid black",
   },
 }));
 
-const ShowDetail = ({ show }) => {
+const ShowDetail = () => {
   const classes = useStyles();
   const [data, setData] = useState({});
+  const params = useParams();
 
   useEffect(() => {
     async function fetchUrl() {
       try {
-        let response = await fetch(`http://api.tvmaze.com/shows/${show}`);
+        let response = await fetch(
+          `http://api.tvmaze.com/shows/${params.showId}`
+        );
         response = await response.json();
         setData(response);
       } catch (err) {
@@ -26,12 +34,15 @@ const ShowDetail = ({ show }) => {
       }
     }
     fetchUrl();
-  }, [show]);
+  }, [params.showId]);
+
+  console.log(data);
 
   return (
     <div className={classes.root}>
+      <div className={classes.detail}></div>
       {data.image ? (
-        <img src={data.image.medium} alt="img" />
+        <img src={data.image.original} width="300px" alt="img" />
       ) : (
         <img src={defaultImg} alt="defaultimg"></img>
       )}
@@ -41,11 +52,11 @@ const ShowDetail = ({ show }) => {
           <Typography>{data.name}</Typography>
           {data.genres &&
             data?.genres.map((genre) => {
-              return <ul>{genre}</ul>;
+              return <ul><Typography>{genre}</Typography></ul>;
             })}
           <Typography>{data?.rating?.average}</Typography>
-          <h1>{data?.rating?.average}</h1>
-          <p>{data?.network?.name}</p>
+          <Typography>{data?.rating?.average}</Typography>
+          <Typography>{data?.network?.name}</Typography>
         </>
       )}
     </div>
