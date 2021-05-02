@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import defaultImg from "../assets/defaultImage.jpg";
+import heartIcon from "../assets/heart.png";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -9,19 +10,29 @@ import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: "1px solid black",
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid",
+    marginLeft: "20%",
+    marginRight: "20%",
+    marginTop: "20px",
+    background: `#333533`,
   },
-  showImg: {
-    border: "1px solid black",
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: "10px",
-    //width: "50%",
+  showCover: {
+    width: "70%",
+    margin: "10px",
   },
   showContent: {
-    padding: "10px",
+    margin: "10px",
     textAlign: "center",
+    width: "30%",
+  },
+  heartIcon: {
+    "&:active": {
+      transform: "scale(0.95)",
+    },
   },
 }));
 
@@ -45,24 +56,17 @@ const ShowDetail = () => {
     fetchUrl();
   }, [params.showId]);
 
-  //console.log(data);
+  console.log(data);
 
   return (
     <div className={classes.root}>
-      {data.image ? (
+      {data && (
         <img
-          className={classes.showImg}
-          src={data.image.original}
+          className={classes.showCover}
+          src={!data.image ? defaultImg : data.image.original}
           style={{ maxWidth: "400px", maxHeight: "800px" }}
           alt="img"
         />
-      ) : (
-        <img
-          className={classes.showImg}
-          src={defaultImg}
-          style={{ maxWidth: "400px", maxHeight: "800px" }}
-          alt="defaultimg"
-        ></img>
       )}
       <div className={classes.showContent}>
         {!data.length > 0 && (
@@ -72,13 +76,19 @@ const ShowDetail = () => {
               data?.genres.map((genre, index) => {
                 return (
                   <ul key={index}>
-                    <Typography>{genre}</Typography>
+                    <Typography>- {genre}</Typography>
                   </ul>
                 );
               })}
             <Typography>{data?.rating?.average}</Typography>
-            <Typography>{data?.rating?.average}</Typography>
+            <Typography>Status: {data?.status}</Typography>
             <Typography>{data?.network?.name}</Typography>
+            <img
+              src={heartIcon}
+              className={classes.heartIcon}
+              width="30px"
+              alt="heart icon"
+            />
           </>
         )}
       </div>

@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
+import FaceIcon from "@material-ui/icons/Face";
+import IconButton from "@material-ui/core/IconButton";
 
-import cave from "../assets/cave.png";
+import cave from "../assets/godzilla.png";
+import { AuthContext } from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -22,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginRight: theme.spacing(2),
     flexGrow: 1,
+    display: "flex",
     color: "#f5cb5c",
     textDecoration: "none",
     "&:hover": {
-      color: "#9EC63D",
+      color: "#c2910a",
     },
   },
   loginBtn: {},
@@ -33,28 +35,33 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuBtn}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton> */}
-
           <Link to="/" className={classes.title}>
-            <Typography variant="h6">
-              <img src={cave} width="40px" alt="cave" />
-              Couch Cove
+            <img src={cave} width="40px" alt="cave" />
+            <Typography style={{ marginTop: "10px" }} variant="h6">
+              ZapZilla
             </Typography>
           </Link>
-          <Button className={classes.loginBtn} edge="end" color="inherit">
-            Login
-          </Button>
+          {auth.isLoggedIn ? (
+            <IconButton
+              className={classes.loginBtn}
+              component={Link}
+              to="/login"
+              style={{ background: "#f5cb5c" }}
+              variant="contained"
+            >
+              <FaceIcon />
+            </IconButton>
+          ) : (
+            <Button variant="filled" style={{ background: "#f5cb5c" }}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>

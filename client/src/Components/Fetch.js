@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Button, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import defaultImg from "../assets/defaultImage.jpg";
-import couchPotato from "../assets/matt-blackmon-edit.jpg";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#333533",
+    //backgroundColor: "#333533",
     margin: "20px",
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+    "& .MuiFormLabel-root.Mui-focused": {
       color: "#f5cb5c",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused fieldset": {
+      borderColor: "#f5cb5c",
     },
   },
   showList: {
@@ -20,10 +22,23 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "row wrap",
     justifyContent: "center",
   },
-  showImage: {
-    margin: "5px",
+  showCard: {
+    margin: "10px",
     width: "210px",
-    "&:hover": {},
+    //background: "#e8af5a",
+    textAlign: "center",
+    color: "#F5CB5C",
+    border: "3px solid",
+    //padding: "3px",
+    /* [theme.breakpoints.down("sm")]: {
+      width: "20%",
+    }, */
+  },
+  showCover: {
+    "&:hover": {
+      //boxShadow: "-3px -3px #F5CB5C",
+      transform: "scale(1.01)",
+    },
   },
   mainImg: {
     display: "block",
@@ -35,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Fetch = () => {
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState("the+wire");
+  const [query, setQuery] = useState("");
   const [url, setUrl] = useState(
     "http://api.tvmaze.com/search/shows?q=the+wire"
   );
@@ -60,25 +75,27 @@ const Fetch = () => {
   };
 
   const handleSubmit = (e) => {
+    if (query === "") console.log("No data");
     setUrl(`http://api.tvmaze.com/search/shows?q=${query}`);
     e.preventDefault();
   };
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className={classes.root}>
-      <img src={couchPotato} className={classes.mainImg} alt="Couch Potato" />
+      {/* <img src={couchPotato} className={classes.mainImg} alt="Couch Potato" /> */}
       <form onSubmit={handleSubmit}>
         <TextField
-          style={{ margin: 8 }}
-          label="Enter name of show"
+          style={{ margin: 8, color: "white" }}
+          label="Search show"
           fullWidth
+          variant="outlined"
           type="text"
           onChange={handleInput}
         />
         <Button
-          style={{ backgroundColor: "#f5cb5c" }}
+          style={{ backgroundColor: "#f5cb5c", marginLeft: "8px" }}
           type="submit"
           variant="contained"
         >
@@ -86,24 +103,26 @@ const Fetch = () => {
         </Button>
       </form>
       <div className={classes.showList}>
-        {data &&
+        {data.length ? (
           data.map((show, index) => (
-            <div className={classes.showImage} key={show.show.id}>
-              {show && (
-                <Link to={`/shows/${show.show.id}`}>
-                  <img
-                    src={
-                      show.show.image === null
-                        ? defaultImg
-                        : show.show.image.medium
-                    }
-                    alt="img"
-                  />
-                </Link>
-              )}
+            <div className={classes.showCard} key={show.show.id}>
+              <Link to={`/shows/${show.show.id}`}>
+                <img
+                  className={classes.showCover}
+                  src={
+                    show.show.image === null
+                      ? defaultImg
+                      : show.show.image.medium
+                  }
+                  alt="img"
+                />
+              </Link>
               <Typography>{show.show.name}</Typography>
             </div>
-          ))}
+          ))
+        ) : (
+          <Typography>{`No shows found`}</Typography>
+        )}
       </div>
     </div>
   );
