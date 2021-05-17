@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import defaultImg from "../assets/defaultImage.jpg";
 import { Link } from "react-router-dom";
+import ShowList from "./ShowList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   showCard: {
+    position: "relative",
     margin: "10px",
     width: "210px",
     //background: "#e8af5a",
@@ -34,21 +35,9 @@ const useStyles = makeStyles((theme) => ({
       width: "20%",
     }, */
   },
-  showCover: {
-    "&:hover": {
-      //boxShadow: "-3px -3px #F5CB5C",
-      transform: "scale(1.01)",
-    },
-  },
-  mainImg: {
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: "50%",
-  },
 }));
 
-const Fetch = () => {
+export default function Fetch() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [url, setUrl] = useState(
@@ -75,16 +64,12 @@ const Fetch = () => {
   };
 
   const handleSubmit = (e) => {
-    if (query === "") console.log("No data");
     setUrl(`http://api.tvmaze.com/search/shows?q=${query}`);
     e.preventDefault();
   };
 
-  //console.log(data);
-
   return (
     <div className={classes.root}>
-      {/* <img src={couchPotato} className={classes.mainImg} alt="Couch Potato" /> */}
       <form onSubmit={handleSubmit}>
         <TextField
           style={{ margin: 8, color: "white" }}
@@ -106,18 +91,14 @@ const Fetch = () => {
         {data.length ? (
           data.map((show, index) => (
             <div className={classes.showCard} key={show.show.id}>
-              <Link to={`/shows/${show.show.id}`}>
-                <img
-                  className={classes.showCover}
-                  src={
-                    show.show.image === null
-                      ? defaultImg
-                      : show.show.image.medium
-                  }
-                  alt="img"
-                />
-              </Link>
-              <Typography>{show.show.name}</Typography>
+              {show.show && (
+                <Link
+                  to={`/shows/${show.show.id}`}
+                  style={{ textDecoration: "none", color: "#F5CB5C" }}
+                >
+                  <ShowList show={show.show} />
+                </Link>
+              )}
             </div>
           ))
         ) : (
@@ -126,6 +107,4 @@ const Fetch = () => {
       </div>
     </div>
   );
-};
-
-export default Fetch;
+}

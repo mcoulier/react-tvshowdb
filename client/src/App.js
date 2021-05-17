@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Login from "./Components/Login";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
+import ShowList from "./Components/ShowList";
 
 const useStyles = makeStyles((theme) => ({
   root: {

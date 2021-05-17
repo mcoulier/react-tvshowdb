@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   loginBtn: {},
 }));
 
-const Header = () => {
+export default function Header () {
   const classes = useStyles();
   const auth = useContext(AuthContext);
 
@@ -67,5 +67,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;

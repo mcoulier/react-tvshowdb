@@ -24,9 +24,8 @@ export default function Footer() {
   return (
     <div className={classes.root}>
       <Typography>2021 MC</Typography>
-      <Typography
-      style={{paddingRight: "5px"}}>
-        Data by{" "}
+      <Typography style={{ paddingRight: "5px" }}>
+        Data by &nbsp
         <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">
           TVmaze
         </a>

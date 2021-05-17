@@ -16,7 +16,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   //const [isLoginMode, setIsLoginMode] = useState(true);
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
+
+  const handleAuth = (e) => {
+    e.preventDefault();
+    auth.logout();
+  };
 
   return (
     <div className={classes.root}>
@@ -24,7 +29,9 @@ export default function Login() {
       <TextField variant="filled" label="Email" />
       <TextField variant="filled" label="Password" />
       {/* <Button variant="contained">Register</Button> */}
-      <Button variant="contained">{auth.isLoggedIn ? "Register" : "Login"}</Button>
+      <Button variant="contained" onClick={handleAuth}>
+        {auth.isLoggedIn ? "Register" : "Login"}
+      </Button>
     </div>
   );
 }

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   showContent: {
     margin: "10px",
     textAlign: "center",
-    width: "30%",
+    //width: "100%",
   },
   heartIcon: {
     "&:active": {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShowDetail = () => {
+export default function ShowDetail() {
   const classes = useStyles();
   const [data, setData] = useState({});
   const params = useParams();
@@ -56,7 +56,7 @@ const ShowDetail = () => {
     fetchUrl();
   }, [params.showId]);
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className={classes.root}>
@@ -94,6 +94,4 @@ const ShowDetail = () => {
       </div>
     </div>
   );
-};
-
-export default ShowDetail;
+}
