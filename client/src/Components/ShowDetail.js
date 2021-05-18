@@ -11,14 +11,14 @@ import { useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexFlow: "row wrap",
+    flexFlow: "column wrap",
     justifyContent: "center",
     alignItems: "center",
     border: "1px solid",
-    marginLeft: "20%",
-    marginRight: "20%",
+    marginLeft: "30%",
+    marginRight: "30%",
     marginTop: "20px",
-    background: `#333533`,
+    background: `#242423`,
   },
   showCover: {
     width: "70%",
@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   showContent: {
     margin: "10px",
     textAlign: "center",
-    //width: "100%",
+    /*     top: 0,
+    width: "100%", */
   },
   heartIcon: {
     "&:active": {

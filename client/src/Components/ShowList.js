@@ -27,17 +27,13 @@ export default function ShowList({ show }) {
 
   return (
     <div>
-      {show && (
-        <>
-          <img
-            className={classes.showCover}
-            src={show.image === null ? defaultImg : show.image.medium}
-            alt="show cover"
-          />
-          <h3 className={classes.rating}>{show?.rating?.average}</h3>
-          <Typography>{show.name}</Typography>
-        </>
-      )}
+      <img
+        className={classes.showCover}
+        src={show.image === null ? defaultImg : show.image.medium}
+        alt="show cover"
+      />
+      <h3 className={classes.rating}>{show?.rating?.average}</h3>
+      <Typography>{show.name}</Typography>
     </div>
   );
 }

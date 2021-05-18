@@ -20,7 +20,11 @@ export default function Login() {
 
   const handleAuth = (e) => {
     e.preventDefault();
-    auth.logout();
+    if (auth.isLoggedIn) {
+      auth.logout();
+    } else {
+      auth.login();
+    }
   };
 
   return (

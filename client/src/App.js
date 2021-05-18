@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Login from "./Components/Login";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
-import ShowList from "./Components/ShowList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = useCallback(() => {
     setIsLoggedIn(true);

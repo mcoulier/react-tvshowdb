@@ -33,9 +33,11 @@ const useStyles = makeStyles((theme) => ({
   loginBtn: {},
 }));
 
-export default function Header () {
+export default function Header() {
   const classes = useStyles();
   const auth = useContext(AuthContext);
+
+  console.log(auth);
 
   return (
     <div className={classes.root}>
@@ -50,15 +52,18 @@ export default function Header () {
           {auth.isLoggedIn ? (
             <IconButton
               className={classes.loginBtn}
-              component={Link}
-              to="/login"
               style={{ background: "#f5cb5c" }}
               variant="contained"
             >
               <FaceIcon />
             </IconButton>
           ) : (
-            <Button variant="filled" style={{ background: "#f5cb5c" }}>
+            <Button
+              component={Link}
+              to="/login"
+              variant="filled"
+              style={{ background: "#f5cb5c" }}
+            >
               Login
             </Button>
           )}
@@ -66,4 +71,4 @@ export default function Header () {
       </AppBar>
     </div>
   );
-};
+}
