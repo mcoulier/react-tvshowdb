@@ -8,7 +8,7 @@ const register = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError("Sign up failed.", 500);
+    const error = new HttpError("Registering failed.", 500);
     return next(error);
   }
 
@@ -21,14 +21,24 @@ const register = async (req, res, next) => {
     username,
     email,
     password,
-    date,
-    likes,
-  })
+/*     date,
+    likes, */
+  });
 
+  try {
+    await createdUser.save();
+  } catch (err) {
+    const error = new HttpError("Registering failed.", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+
+  res.json({message: "Logged in."})
 };
 
 exports.register = register;

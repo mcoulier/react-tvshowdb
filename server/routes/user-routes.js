@@ -1,12 +1,15 @@
 const express = require("express");
-
+const router = express.Router();
 const usersController = require("../controllers/usersController");
-const router = require("./routes");
 
-router.get("/");
+/* const router = require("./routes"); */
 
-router.get("/register", usersController.register);
+router.get("/", (req, res, next) => {
+  res.send("api");
+});
 
-router.get("/login", usersController.login);
+router.post("/register", usersController.register);
 
-router.post("/register");
+router.post("/login", usersController.login);
+
+module.exports = router;

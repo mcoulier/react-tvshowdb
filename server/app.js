@@ -1,11 +1,15 @@
 const express = require("express");
 const port = process.env.PORT || 8080;
-const mongoose = require("mongoose");
-const userRoutes = require("./routes/routes");
+const bodyParser = require("body-parser");
+const userRoutes = require("./routes/user-routes");
 const dotenv = require("dotenv");
-const app = express();
 dotenv.config();
+const mongoose = require("mongoose");
 const MONGO_DB = process.env.MONGO_DB;
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect(MONGO_DB, {
   useNewUrlParser: true,
@@ -13,7 +17,7 @@ mongoose.connect(MONGO_DB, {
 });
 mongoose.set("useCreateIndex", true);
 
-app.use("/api", userRoutes);
+app.use("/", userRoutes);
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {
