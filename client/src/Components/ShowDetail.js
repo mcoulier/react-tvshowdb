@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import defaultImg from "../assets/defaultImage.jpg";
 import heartIcon from "../assets/heart.png";
+import tvIcon from "../assets/tvIcon.png";
+import clockIcon from "../assets/clockIcon.png";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -11,14 +13,13 @@ import { useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexFlow: "column wrap",
-    justifyContent: "center",
-    alignItems: "center",
+    flexFlow: "row wrap",
     border: "1px solid",
-    marginLeft: "30%",
-    marginRight: "30%",
+    marginLeft: "10%",
+    marginRight: "10%",
     marginTop: "20px",
     background: `#242423`,
+    color: "#F5CB5C",
   },
   showCover: {
     width: "70%",
@@ -26,14 +27,20 @@ const useStyles = makeStyles((theme) => ({
   },
   showContent: {
     margin: "10px",
-    textAlign: "center",
-    /*     top: 0,
-    width: "100%", */
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   heartIcon: {
     "&:active": {
       transform: "scale(0.95)",
     },
+  },
+  genres: {
+    background: "#F5CB5C",
+    borderRadius: "30px",
+    color: "black",
   },
 }));
 
@@ -57,7 +64,7 @@ export default function ShowDetail() {
     fetchUrl();
   }, [params.showId]);
 
-  //console.log(data);
+  console.log(data);
 
   return (
     <div className={classes.root}>
@@ -70,28 +77,33 @@ export default function ShowDetail() {
         />
       )}
       <div className={classes.showContent}>
-        {!data.length > 0 && (
-          <>
-            <Typography variant="h4">{data.name}</Typography>
-            {data.genres &&
-              data?.genres.map((genre, index) => {
-                return (
-                  <ul key={index}>
-                    <Typography>- {genre}</Typography>
-                  </ul>
-                );
-              })}
-            <Typography>{data?.rating?.average}</Typography>
-            <Typography>Status: {data?.status}</Typography>
-            <Typography>{data?.network?.name}</Typography>
-            <img
-              src={heartIcon}
-              className={classes.heartIcon}
-              width="30px"
-              alt="heart icon"
-            />
-          </>
-        )}
+        <Typography variant="h4">
+          {data.name}
+          <img
+            src={heartIcon}
+            className={classes.heartIcon}
+            width="30px"
+            alt="heart icon"
+          />
+        </Typography>
+        {data.genres &&
+          data?.genres.map((genre, index) => {
+            return (
+              <p key={index} className={classes.genres}>
+                <Typography>{genre}</Typography>
+              </p>
+            );
+          })}
+        <Typography>{data?.rating?.average}</Typography>
+        <Typography>
+          <img src={clockIcon} alt="clock icon" width="30px" />
+          {data?.averageRuntime}
+        </Typography>
+        <Typography>Status: {data?.status}</Typography>
+        <Typography>
+          <img src={tvIcon} alt="tv icon" width="30px" />
+          {data?.network?.name}
+        </Typography>
       </div>
     </div>
   );

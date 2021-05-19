@@ -13,9 +13,14 @@ import { AuthContext } from "./context/auth-context";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "#333533",
-    height: "100vh",
+    minHeight: "100vh",
     overflowX: "hidden",
     overflowY: "auto",
+    position: "relative",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 }));
 
