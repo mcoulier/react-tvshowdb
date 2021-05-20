@@ -6,7 +6,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import ShowDetail from "./Components/ShowDetail";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Login from "./Components/Login";
+import Auth from "./Components/Auth";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
 
@@ -47,11 +47,11 @@ function App() {
             <Route exact path="/">
               <Fetch />
             </Route>
-            <Route exact path="/shows/:showId">
+            <Route path="/shows/:showId">
               <ShowDetail />
             </Route>
-            <Route exact path="/login">
-              <Login />
+            <Route path="/login">
+              <Auth />
             </Route>
           </Switch>
           <Footer />

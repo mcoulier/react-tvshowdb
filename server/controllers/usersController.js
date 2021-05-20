@@ -21,8 +21,6 @@ const register = async (req, res, next) => {
     username,
     email,
     password,
-/*     date,
-    likes, */
   });
 
   try {
@@ -35,10 +33,23 @@ const register = async (req, res, next) => {
   res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  res.json({message: "Logged in."})
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("Login failed.", 500);
+    return next(error);
+  }
+
+  if (!existingUser || existingUser.password !== password) {
+    const error = new HttpError("Invalid credentials, please try again.", 401);
+    return next(error);
+  }
+
+  res.json({ message: "Logged in." });
 };
 
 exports.register = register;
