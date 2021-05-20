@@ -64,8 +64,6 @@ export default function ShowDetail() {
     fetchUrl();
   }, [params.showId]);
 
-  console.log(data);
-
   return (
     <div className={classes.root}>
       {data && (

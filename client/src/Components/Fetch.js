@@ -102,7 +102,7 @@ export default function Fetch() {
             </div>
           ))
         ) : (
-          <Typography>{`No shows found`}</Typography>
+          <Typography>No shows found</Typography>
         )}
       </div>
     </div>

@@ -37,8 +37,6 @@ export default function Header() {
   const classes = useStyles();
   const auth = useContext(AuthContext);
 
-  console.log(auth);
-
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -61,7 +59,6 @@ export default function Header() {
             <Button
               component={Link}
               to="/login"
-              variant="filled"
               style={{ background: "#f5cb5c" }}
             >
               Login
