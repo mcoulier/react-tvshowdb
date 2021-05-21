@@ -52,6 +52,8 @@ export default function Header() {
               className={classes.loginBtn}
               style={{ background: "#f5cb5c" }}
               variant="contained"
+              component={Link}
+              to="/user"
             >
               <FaceIcon />
             </IconButton>

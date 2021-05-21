@@ -26,13 +26,13 @@ export default function ShowList({ show }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <>
       <img
         className={classes.showCover}
         src={show.image === null ? defaultImg : show.image.medium}
         alt="show cover"
       />
       <Typography>{show.name}</Typography>
-    </div>
+    </>
   );
 }

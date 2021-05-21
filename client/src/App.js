@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Auth from "./Components/Auth";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
+import { UserDetail } from "./Components/UserDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Auth />
+            </Route>
+            <Route path="/user">
+              <UserDetail />
             </Route>
           </Switch>
           <Footer />

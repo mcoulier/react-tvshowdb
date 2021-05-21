@@ -1,5 +1,6 @@
 const HttpError = require("../models/error");
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 const register = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -17,10 +18,18 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    const error = new HttpError("Registering failed.", 500);
+    return next(error);
+  }
+
   const createdUser = new User({
     username,
     email,
-    password,
+    password: hashedPassword,
   });
 
   try {
@@ -44,12 +53,28 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
     const error = new HttpError("Invalid credentials, please try again.", 401);
     return next(error);
   }
 
-  res.json({ message: "Logged in." });
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError("Login failed.", 500);
+    return next(error);
+  }
+
+  if (!isValidPassword) {
+    const error = new HttpError("Invalid credentials, please try again.", 401);
+    return next(error);
+  }
+
+  res.json({
+    message: "Logged in.",
+    user: existingUser.toObject({ getters: true }),
+  });
 };
 
 exports.register = register;
