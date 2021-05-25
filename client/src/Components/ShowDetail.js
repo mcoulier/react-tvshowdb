@@ -14,15 +14,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexFlow: "row wrap",
-    border: "1px solid",
-    marginLeft: "10%",
-    marginRight: "10%",
-    marginTop: "20px",
+    borderTop: "1px solid",
+    borderBottom: "1px solid",
+    marginTop: "40px",
+    marginBottom: "40px",
     background: `#242423`,
     color: "#F5CB5C",
+    width: "auto",
+    justifyContent: "center",
   },
   showCover: {
-    width: "70%",
+    width: "90%",
     margin: "10px",
   },
   showContent: {
@@ -76,7 +78,7 @@ export default function ShowDetail() {
       )}
       <div className={classes.showContent}>
         <Typography variant="h4">
-          {data.name}
+          {data.name}{" "}
           <img
             src={heartIcon}
             className={classes.heartIcon}
@@ -93,14 +95,15 @@ export default function ShowDetail() {
             );
           })}
         <Typography>{data?.rating?.average}</Typography>
-        <Typography>
-          <img src={clockIcon} alt="clock icon" width="30px" />
-          {data?.averageRuntime}
-        </Typography>
+        {data?.averageRuntime && (
+          <Typography>
+            <img src={clockIcon} alt="clock icon" width="30px" />
+            {data?.averageRuntime}
+          </Typography>
+        )}
         <Typography>Status: {data?.status}</Typography>
         <Typography>
-          <img src={tvIcon} alt="tv icon" width="30px" />
-          {data?.network?.name}
+          <img src={tvIcon} alt="tv icon" width="30px" /> {data?.network?.name}
         </Typography>
       </div>
     </div>
