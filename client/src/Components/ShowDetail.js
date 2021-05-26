@@ -89,9 +89,9 @@ export default function ShowDetail() {
         {data.genres &&
           data?.genres.map((genre, index) => {
             return (
-              <p key={index} className={classes.genres}>
-                <Typography>{genre}</Typography>
-              </p>
+              <Typography key={index} className={classes.genres}>
+                {genre}
+              </Typography>
             );
           })}
         <Typography>{data?.rating?.average}</Typography>

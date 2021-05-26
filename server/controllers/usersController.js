@@ -1,6 +1,10 @@
 const HttpError = require("../models/error");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+const privateKey = process.env.privateKey;
 
 const register = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -39,7 +43,20 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: createdUser.id, email: createdUser.email },
+      privateKey,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Registering failed.", 500);
+    return next(error);
+  }
+  res
+    .status(201)
+    .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -71,9 +88,22 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: existingUser.id, email: existingUser.email },
+      privateKey,
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Login failed.", 500);
+    return next(error);
+  }
+
   res.json({
-    message: "Logged in.",
-    user: existingUser.toObject({ getters: true }),
+    userId: existingUser.id,
+    email: existingUser.email,
+    token: token,
   });
 };
 

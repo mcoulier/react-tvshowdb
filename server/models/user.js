@@ -6,7 +6,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minLength: 8 },
   date: { type: Date, default: Date.now },
-  likes: { type: String },
+  likes: { type: Schema.Types.ObjectId, ref: "Likes" },
 });
 
 module.exports = mongoose.model("User", userSchema);
