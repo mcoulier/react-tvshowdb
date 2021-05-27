@@ -3,14 +3,23 @@ import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Typography } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
-import { UserDetail } from "./UserDetail";
 
 const useStyles = makeStyles((theme) => ({
   form: {
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: "#f5cb5c",
+    },
+    "& .MuiInput-underline::after": {
+      borderColor: "#f5cb5c",
+    },
     display: "flex",
     flexDirection: "column",
     marginLeft: "auto",
     marginRight: "auto",
+    width: "50%",
+  },
+  lowerForm: {
+    marginTop: "5px",
   },
 }));
 
@@ -21,7 +30,6 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [user, setUser] = useState(false);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -48,6 +56,7 @@ export default function Auth() {
           responseData.username,
           responseData.token
         );
+        //Redirect to userpage if successful
       } catch (err) {
         console.log(err);
       }
@@ -64,8 +73,6 @@ export default function Auth() {
           }),
         });
         const responseData = await response.json();
-        console.log(`from auth login ${responseData.username}`);
-        setUser(true);
         auth.login(
           responseData.userId,
           responseData.username,
@@ -79,44 +86,37 @@ export default function Auth() {
 
   return (
     <>
-      {user ? (
-        <UserDetail />
-      ) : (
-        <>
-          <form className={classes.form}>
-            {!isLoginMode && (
-              <TextField
-                label="Username"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            )}
-            <TextField
-              label="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              type="password"
-              label="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button variant="contained" onClick={handleAuth}>
-              {!isLoginMode ? "Register" : "Login"}
-            </Button>
-          </form>
-          {!isLoginMode && (
-            <>
-              <Typography>
-                Already have an account?{" "}
-                <Button
-                  onClick={() => setIsLoginMode((prevState) => !prevState)}
-                >
-                  Login
-                </Button>
-              </Typography>
-            </>
-          )}
-        </>
-      )}
+      <form className={classes.form}>
+        {!isLoginMode && (
+          <TextField
+            label="Username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        )}
+        <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
+        <TextField
+          type="password"
+          label="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          style={{ background: "#f5cb5c", marginTop: "10px" }}
+          variant="contained"
+          onClick={handleAuth}
+        >
+          {!isLoginMode ? "Register" : "Login"}
+        </Button>
+        {!isLoginMode && (
+          <div className={classes.lowerForm}>
+            <Typography>
+              Already have an account?{" "}
+              <Button onClick={() => setIsLoginMode((prevState) => !prevState)}>
+                Login
+              </Button>
+            </Typography>
+          </div>
+        )}
+      </form>
     </>
   );
 }
