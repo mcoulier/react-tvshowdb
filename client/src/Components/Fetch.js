@@ -46,7 +46,7 @@ export default function Fetch() {
   const classes = useStyles();
 
   useEffect(() => {
-    async function fetchUrl() {
+    const fetchUrl = async () => {
       try {
         let response = await fetch(url);
         response = await response.json();
@@ -54,7 +54,7 @@ export default function Fetch() {
       } catch (err) {
         alert(err);
       }
-    }
+    };
     fetchUrl();
   }, [url]);
 

@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Typography } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
+import { UserDetail } from "./UserDetail";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -20,6 +21,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [user, setUser] = useState();
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -59,7 +61,8 @@ export default function Auth() {
           }),
         });
         const responseData = await response.json();
-        console.log(responseData);
+        console.log(`from auth login ${responseData.username}`);
+        setUser(responseData.username);
         auth.login();
       } catch (err) {
         console.log(err);
@@ -69,31 +72,42 @@ export default function Auth() {
 
   return (
     <>
-      <form className={classes.form}>
-        {!isLoginMode && (
-          <TextField
-            label="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        )}
-        <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
-        <TextField
-          type="password"
-          label="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button variant="contained" onClick={handleAuth}>
-          {!isLoginMode ? "Register" : "Login"}
-        </Button>
-      </form>
-      {!isLoginMode && (
+      {user ? (
+        <UserDetail username={user} />
+      ) : (
         <>
-          <Typography>
-            Already have an account?{" "}
-            <Button onClick={() => setIsLoginMode((prevState) => !prevState)}>
-              Login
+          <form className={classes.form}>
+            {!isLoginMode && (
+              <TextField
+                label="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            )}
+            <TextField
+              label="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button variant="contained" onClick={handleAuth}>
+              {!isLoginMode ? "Register" : "Login"}
             </Button>
-          </Typography>
+          </form>
+          {!isLoginMode && (
+            <>
+              <Typography>
+                Already have an account?{" "}
+                <Button
+                  onClick={() => setIsLoginMode((prevState) => !prevState)}
+                >
+                  Login
+                </Button>
+              </Typography>
+            </>
+          )}
         </>
       )}
     </>

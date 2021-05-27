@@ -1,10 +1,11 @@
-import { Typography } from "@material-ui/core";
 import React from "react";
 
-export const UserDetail = () => {
+import { Typography } from "@material-ui/core";
+
+export const UserDetail = ({ username }) => {
   return (
     <div>
-      <Typography>USER PAGE</Typography>
+      <Typography>Hello {username}</Typography>
     </div>
   );
 };
