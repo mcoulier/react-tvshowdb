@@ -21,7 +21,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(false);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -43,8 +43,11 @@ export default function Auth() {
           }
         );
         const responseData = await response.json();
-        console.log(responseData);
-        auth.login();
+        auth.login(
+          responseData.userId,
+          responseData.username,
+          responseData.token
+        );
       } catch (err) {
         console.log(err);
       }
@@ -62,8 +65,12 @@ export default function Auth() {
         });
         const responseData = await response.json();
         console.log(`from auth login ${responseData.username}`);
-        setUser(responseData.username);
-        auth.login();
+        setUser(true);
+        auth.login(
+          responseData.userId,
+          responseData.username,
+          responseData.token
+        );
       } catch (err) {
         console.log(err);
       }
@@ -73,7 +80,7 @@ export default function Auth() {
   return (
     <>
       {user ? (
-        <UserDetail username={user} />
+        <UserDetail />
       ) : (
         <>
           <form className={classes.form}>

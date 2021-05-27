@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import Fetch from "./Components/Fetch";
 import Header from "./Components/Header";
@@ -27,20 +27,44 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
+  const [userId, setUserId] = useState(false);
+  const [username, setUsername] = useState(false);
 
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, username, token) => {
+    setToken(token);
+    setUserId(uid);
+    setUsername(username);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: uid, username: username, token: token })
+    );
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
+    setUserId(null);
+    localStorage.removeItem("userData");
   }, []);
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData && userData.token) {
+      login(userData.userId, userData.username, userData.token);
+    }
+  }, [login]);
 
   return (
     <div className={classes.root}>
       <AuthContext.Provider
-        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userId: userId,
+          username: username,
+          login: login,
+          logout: logout,
+        }}
       >
         <Router>
           <Header />
@@ -55,7 +79,7 @@ function App() {
               <Auth />
             </Route>
             <Route path="/user">
-              <UserDetail />
+              <UserDetail username={username} />
             </Route>
           </Switch>
           <Footer />
