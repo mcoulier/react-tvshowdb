@@ -31,7 +31,7 @@ function App() {
   const classes = useStyles();
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
-  const [username, setUsername] = useState(false);
+  const [username, setUsername] = useState("");
   const [tokenExpiration, setTokenExpiration] = useState();
 
   const login = useCallback((uid, username, token, expirationDate) => {
@@ -82,6 +82,8 @@ function App() {
       clearTimeout(logoutTimer);
     }
   }, [token, logout, tokenExpiration]);
+
+  console.log(logoutTimer);
 
   return (
     <div className={classes.root}>

@@ -11,6 +11,8 @@ router.post("/register", usersController.register);
 
 router.post("/login", usersController.login);
 
+router.get("/:uid/userlikes", usersController.userLikes);
+
 router.patch("/:uid/like", usersController.updateLike);
 
 router.delete("/:uid", usersController.deleteLike);

@@ -111,19 +111,28 @@ const login = async (req, res, next) => {
 const updateLike = async (req, res, next) => {
   const { showId, showName } = req.body;
 
-  User.findByIdAndUpdate(req.params.uid, {
-    likes: [{
-      showId: showId,
-      showName: showName,
-    }], 
-  });
-
-  console.log(showId, showName, req.params.uid);
+  const result = await User.findByIdAndUpdate(
+    req.params.uid,
+    { $addToSet: { likes: { showId: showId, showName: showName } } },
+    { safe: true, upsert: true },
+    function (err, model) {
+      console.log(err);
+    }
+  );
 };
 
 const deleteLike = async (req, res, next) => {};
+
+const userLikes = async (req, res, next) => {
+  const result = await User.findById(req.params.uid);
+
+  res.json({
+    result,
+  });
+};
 
 exports.register = register;
 exports.login = login;
 exports.updateLike = updateLike;
 exports.deleteLike = deleteLike;
+exports.userLikes = userLikes;
