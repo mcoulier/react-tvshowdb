@@ -63,7 +63,7 @@ export default function Header() {
               to="/login"
               style={{ background: "#f5cb5c" }}
             >
-              Login
+              Register / Login
             </Button>
           )}
         </Toolbar>

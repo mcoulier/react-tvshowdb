@@ -108,5 +108,22 @@ const login = async (req, res, next) => {
   });
 };
 
+const updateLike = async (req, res, next) => {
+  const { showId, showName } = req.body;
+
+  User.findByIdAndUpdate(req.params.uid, {
+    likes: [{
+      showId: showId,
+      showName: showName,
+    }], 
+  });
+
+  console.log(showId, showName, req.params.uid);
+};
+
+const deleteLike = async (req, res, next) => {};
+
 exports.register = register;
 exports.login = login;
+exports.updateLike = updateLike;
+exports.deleteLike = deleteLike;

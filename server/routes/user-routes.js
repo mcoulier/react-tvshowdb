@@ -11,6 +11,10 @@ router.post("/register", usersController.register);
 
 router.post("/login", usersController.login);
 
+router.patch("/:uid/like", usersController.updateLike);
+
+router.delete("/:uid", usersController.deleteLike);
+
 //Routes after need valid token
 router.use(checkToken);
 

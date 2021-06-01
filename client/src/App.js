@@ -25,19 +25,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let logoutTimer;
+
 function App() {
   const classes = useStyles();
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
   const [username, setUsername] = useState(false);
+  const [tokenExpiration, setTokenExpiration] = useState();
 
-  const login = useCallback((uid, username, token) => {
+  const login = useCallback((uid, username, token, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setUsername(username);
+    const tokenExpiration =
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    setTokenExpiration(tokenExpiration);
     localStorage.setItem(
       "userData",
-      JSON.stringify({ userId: uid, username: username, token: token })
+      JSON.stringify({
+        userId: uid,
+        username: username,
+        token: token,
+        expiration: tokenExpiration.toISOString(),
+      })
     );
   }, []);
 
@@ -49,10 +60,28 @@ function App() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-    if (userData && userData.token) {
-      login(userData.userId, userData.username, userData.token);
+    if (
+      userData &&
+      userData.token &&
+      new Date(userData.expiration) > new Date()
+    ) {
+      login(
+        userData.userId,
+        userData.username,
+        userData.token,
+        new Date(userData.expiration)
+      );
     }
   }, [login]);
+
+  useEffect(() => {
+    if ((token, tokenExpiration)) {
+      const remainingTime = tokenExpiration.getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [token, logout, tokenExpiration]);
 
   return (
     <div className={classes.root}>

@@ -92,6 +92,7 @@ export default function Fetch() {
           data.map((show, index) => (
             <div className={classes.showCard} key={show.show.id}>
               {show.show && (
+                
                 <Link
                   to={`/shows/${show.show.id}`}
                   style={{ textDecoration: "none", color: "#F5CB5C" }}

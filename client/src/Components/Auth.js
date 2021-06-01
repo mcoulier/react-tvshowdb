@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Typography } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
 
+import { Redirect } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   form: {
     "& .MuiFormLabel-root.Mui-focused": {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Auth() {
   const classes = useStyles();
   const [isLoginMode, setIsLoginMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,12 +54,13 @@ export default function Auth() {
           }
         );
         const responseData = await response.json();
+        setIsLoggedIn(false);
         auth.login(
           responseData.userId,
           responseData.username,
           responseData.token
         );
-        //Redirect to userpage if successful
+        setIsLoggedIn(true);
       } catch (err) {
         console.log(err);
       }
@@ -78,6 +82,7 @@ export default function Auth() {
           responseData.username,
           responseData.token
         );
+        setIsLoggedIn(true);
       } catch (err) {
         console.log(err);
       }
@@ -86,37 +91,43 @@ export default function Auth() {
 
   return (
     <>
-      <form className={classes.form}>
-        {!isLoginMode && (
+      {isLoggedIn ? (
+        <Redirect to="/user" />
+      ) : (
+        <form className={classes.form}>
+          {!isLoginMode && (
+            <TextField
+              label="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          )}
+          <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
           <TextField
-            label="Username"
-            onChange={(e) => setUsername(e.target.value)}
+            type="password"
+            label="Password"
+            onChange={(e) => setPassword(e.target.value)}
           />
-        )}
-        <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
-        <TextField
-          type="password"
-          label="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          style={{ background: "#f5cb5c", marginTop: "10px" }}
-          variant="contained"
-          onClick={handleAuth}
-        >
-          {!isLoginMode ? "Register" : "Login"}
-        </Button>
-        {!isLoginMode && (
-          <div className={classes.lowerForm}>
-            <Typography>
-              Already have an account?{" "}
-              <Button onClick={() => setIsLoginMode((prevState) => !prevState)}>
-                Login
-              </Button>
-            </Typography>
-          </div>
-        )}
-      </form>
+          <Button
+            style={{ background: "#f5cb5c", marginTop: "10px" }}
+            variant="contained"
+            onClick={handleAuth}
+          >
+            {!isLoginMode ? "Register" : "Login"}
+          </Button>
+          {!isLoginMode && (
+            <div className={classes.lowerForm}>
+              <Typography>
+                Already have an account?{" "}
+                <Button
+                  onClick={() => setIsLoginMode((prevState) => !prevState)}
+                >
+                  Login
+                </Button>
+              </Typography>
+            </div>
+          )}
+        </form>
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/auth-context";
 
-import defaultImg from "../assets/defaultImage.jpg";
 import heartIcon from "../assets/heart.png";
 import tvIcon from "../assets/tvIcon.png";
 import clockIcon from "../assets/clockIcon.png";
@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
 import { useParams } from "react-router-dom";
+import defaultImg from "../assets/defaultImage.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +49,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShowDetail() {
   const classes = useStyles();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const params = useParams();
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchUrl() {
@@ -66,20 +68,41 @@ export default function ShowDetail() {
     fetchUrl();
   }, [params.showId]);
 
+  const updateLike = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/${auth.userId}/like`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          showId: params.showId,
+          showName: data.name,
+        }),
+      });
+      //const responseData = await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={classes.root}>
-      {data && (
-        <img
-          className={classes.showCover}
-          src={!data.image ? defaultImg : data.image.original}
-          style={{ maxWidth: "400px", maxHeight: "800px" }}
-          alt="img"
-        />
-      )}
+      <img
+        className={classes.showCover}
+        src={
+          data && data.image && Object.keys(data.image).length
+            ? data.image.medium
+            : defaultImg
+        }
+        style={{ maxWidth: "400px", maxHeight: "800px" }}
+        alt="cover"
+      />
       <div className={classes.showContent}>
         <Typography variant="h4">
-          {data.name}{" "}
+          {data.name}
           <img
+            onClick={updateLike}
             src={heartIcon}
             className={classes.heartIcon}
             width="30px"
