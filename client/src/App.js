@@ -31,13 +31,13 @@ function App() {
   const classes = useStyles();
   const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(false);
   const [tokenExpiration, setTokenExpiration] = useState();
 
   const login = useCallback((uid, username, token, expirationDate) => {
+    setUsername(username);
     setToken(token);
     setUserId(uid);
-    setUsername(username);
     const tokenExpiration =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpiration(tokenExpiration);
@@ -45,8 +45,8 @@ function App() {
       "userData",
       JSON.stringify({
         userId: uid,
-        username: username,
-        token: token,
+        username,
+        token,
         expiration: tokenExpiration.toISOString(),
       })
     );
@@ -83,18 +83,16 @@ function App() {
     }
   }, [token, logout, tokenExpiration]);
 
-  console.log(logoutTimer);
-
   return (
     <div className={classes.root}>
       <AuthContext.Provider
         value={{
           isLoggedIn: !!token,
-          token: token,
-          userId: userId,
-          username: username,
-          login: login,
-          logout: logout,
+          token,
+          userId,
+          username,
+          login,
+          logout,
         }}
       >
         <Router>
@@ -110,7 +108,7 @@ function App() {
               <Auth />
             </Route>
             <Route path="/user">
-              <UserDetail username={username} />
+              <UserDetail />
             </Route>
           </Switch>
           <Footer />

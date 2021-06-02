@@ -47,14 +47,13 @@ export default function Auth() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              username: username,
-              email: email,
-              password: password,
+              username,
+              email,
+              password,
             }),
           }
         );
         const responseData = await response.json();
-        setIsLoggedIn(false);
         auth.login(
           responseData.userId,
           responseData.username,
@@ -72,8 +71,8 @@ export default function Auth() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: email,
-            password: password,
+            email,
+            password,
           }),
         });
         const responseData = await response.json();

@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
       color: "#c2910a",
     },
   },
-  loginBtn: {},
 }));
 
 export default function Header() {

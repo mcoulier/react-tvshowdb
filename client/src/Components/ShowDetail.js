@@ -69,20 +69,26 @@ export default function ShowDetail() {
   }, [params.showId]);
 
   const updateLike = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/users/${auth.userId}/like`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          showId: params.showId,
-          showName: data.name,
-        }),
-      });
-      //const responseData = await response.json();
-    } catch (err) {
-      console.log(err);
+    if (auth.userId) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/users/${auth.userId}/like`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              showId: params.showId,
+              showName: data.name,
+            }),
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert("You need to be logged in to like!");
     }
   };
 

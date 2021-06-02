@@ -6,7 +6,6 @@ import ShowList from "./ShowList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //backgroundColor: "#333533",
     margin: "20px",
     "& .MuiFormLabel-root.Mui-focused": {
       color: "#f5cb5c",
@@ -26,14 +25,9 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     margin: "10px",
     width: "210px",
-    //background: "#e8af5a",
     textAlign: "center",
     color: "#F5CB5C",
     border: "3px solid",
-    //padding: "3px",
-    /* [theme.breakpoints.down("sm")]: {
-      width: "20%",
-    }, */
   },
 }));
 
@@ -92,7 +86,6 @@ export default function Fetch() {
           data.map((show, index) => (
             <div className={classes.showCard} key={show.show.id}>
               {show.show && (
-                
                 <Link
                   to={`/shows/${show.show.id}`}
                   style={{ textDecoration: "none", color: "#F5CB5C" }}

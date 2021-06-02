@@ -110,21 +110,54 @@ const login = async (req, res, next) => {
 
 const updateLike = async (req, res, next) => {
   const { showId, showName } = req.body;
+  const userId = req.params.uid;
 
-  const result = await User.findByIdAndUpdate(
-    req.params.uid,
-    { $addToSet: { likes: { showId: showId, showName: showName } } },
-    { safe: true, upsert: true },
-    function (err, model) {
-      console.log(err);
-    }
-  );
+  //const currentUser = await User.findById(req.params.uid);
+
+  //console.log("curr" + currentUser)
+
+  /*   let existingShow;
+  try {
+    existingShow = await User.findById(userId, {
+      likes: { $elemMatch: { showId: showId } },
+    });
+    console.log(existingShow.likes[0]);
+  } catch (err) {
+    const error = new HttpError("Like show failed.", 500);
+    return next(error);
+  } */
+
+  //console.log(!existingShow);
+
+  try {
+    const result = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { likes: { showId: showId, showName: showName } } },
+      { safe: true, upsert: true },
+      function (err, model) {
+        //console.log(err);
+      }
+    );
+  } catch (err) {
+    const error = new HttpError("Like show failed.", 500);
+    return next(error);
+  }
+  /*   console.log("show already liked");
+   */
 };
 
 const deleteLike = async (req, res, next) => {};
 
 const userLikes = async (req, res, next) => {
-  const result = await User.findById(req.params.uid);
+  const userId = req.params.uid;
+  let result;
+
+  try {
+    result = await User.findById(userId);
+  } catch {
+    const error = new HttpError("Like show failed.", 500);
+    return next(error);
+  }
 
   res.json({
     result,
