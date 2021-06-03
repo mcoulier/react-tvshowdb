@@ -6,9 +6,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "grid",
-  },
+  root: {},
 }));
 
 export const UserDetail = () => {
@@ -19,15 +17,19 @@ export const UserDetail = () => {
 
   useEffect(() => {
     const fetchUrl = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/users/${auth.userId}/userlikes`
-        );
-        const responseData = await response.json();
-        //setUserData(responseData.result);
-        setUserLikes(responseData.result.likes);
-      } catch (err) {
-        alert(err);
+      if (auth.userId) {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/api/users/${auth.userId}/userlikes`
+          );
+          const responseData = await response.json();
+          //setUserData(responseData.result);
+          setUserLikes(responseData.result.likes);
+        } catch (err) {
+          alert(err);
+        }
+      } else {
+        console.log("problem fetching user data");
       }
     };
     fetchUrl();
@@ -35,20 +37,22 @@ export const UserDetail = () => {
 
   return (
     <div className={classes.root}>
-      <>
-        <Typography>Hello {auth.username}</Typography>
-        <Link to="/">
-          <Button onClick={auth.logout}>Logout</Button>
-        </Link>
-        {userLikes.map((like, id) => (
+      {userLikes.length ? (
+        userLikes.map((like, id) => (
           <Link
             to={`/shows/${like.showId}`}
             style={{ textDecoration: "none", color: "#F5CB5C" }}
           >
             <li key={like._id}>{like.showName}</li>
           </Link>
-        ))}
-      </>
+        ))
+      ) : (
+        <Typography>Loadingspinner...</Typography>
+      )}
+      <Typography>Hello {auth.username}</Typography>
+      <Link to="/">
+        <Button onClick={auth.logout}>Logout</Button>
+      </Link>
     </div>
   );
 };

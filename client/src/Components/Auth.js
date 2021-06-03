@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Typography } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
-
-import { Redirect } from "react-router-dom";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     width: "50%",
-  },
-  lowerForm: {
-    marginTop: "5px",
+    marginTop: "20px",
   },
 }));
 
@@ -30,12 +28,9 @@ export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const auth = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
 
-  const handleAuth = async (e) => {
-    e.preventDefault();
+  const handleAuth = async (username, email, password) => {
+    //e.preventDefault();
 
     if (!isLoginMode) {
       try {
@@ -76,6 +71,8 @@ export default function Auth() {
           }),
         });
         const responseData = await response.json();
+        console.log(responseData);
+
         auth.login(
           responseData.userId,
           responseData.username,
@@ -93,39 +90,106 @@ export default function Auth() {
       {isLoggedIn ? (
         <Redirect to="/user" />
       ) : (
-        <form className={classes.form}>
-          {!isLoginMode && (
-            <TextField
-              label="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          )}
-          <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
-          <TextField
-            type="password"
-            label="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            style={{ background: "#f5cb5c", marginTop: "10px" }}
-            variant="contained"
-            onClick={handleAuth}
-          >
-            {!isLoginMode ? "Register" : "Login"}
-          </Button>
-          {!isLoginMode && (
-            <div className={classes.lowerForm}>
-              <Typography>
-                Already have an account?{" "}
+        <Formik
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+            showUsername: true,
+          }}
+          validationSchema={yup.object({
+            showUsername: yup.boolean(),
+            username: yup.string("Enter your username").when("showUsername", {
+              is: !isLoginMode,
+              then: yup.string("Username is required").required(),
+            }),
+            email: yup
+              .string("Enter your email")
+              .email("Enter a valid email")
+              .required("Email is required"),
+            password: yup
+              .string("Enter your password")
+              .min(8, "Password should be of minimum 8 characters length")
+              .required("Password is required"),
+          })}
+          onSubmit={async (values, { setSubmitting }) => {
+            setSubmitting(true);
+            handleAuth(values.username, values.email, values.password);
+          }}
+        >
+          {(props) => {
+            const {
+              values,
+              touched,
+              errors,
+              isSubmitting,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+            } = props;
+            return (
+              <Form onSubmit={handleSubmit} className={classes.form}>
+                {!isLoginMode && (
+                  <TextField
+                    label="Username"
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={
+                      errors.username && touched.username && errors.username
+                    }
+                    error={errors.username && touched.username}
+                    margin="normal"
+                  />
+                )}
+                <TextField
+                  label="Email"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={errors.email && touched.email && errors.email}
+                  error={errors.email && touched.email}
+                  margin="normal"
+                />
+
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={
+                    errors.password && touched.password && errors.password
+                  }
+                  error={errors.password && touched.password}
+                  margin="normal"
+                />
                 <Button
-                  onClick={() => setIsLoginMode((prevState) => !prevState)}
+                  style={{ background: "#f5cb5c", marginTop: "10px" }}
+                  variant="contained"
+                  disabled={isSubmitting}
+                  //onClick={handleAuth}
+                  type="submit"
                 >
-                  Login
+                  {!isLoginMode ? "Register" : "Login"}
                 </Button>
-              </Typography>
-            </div>
-          )}
-        </form>
+                {!isLoginMode && (
+                  <Typography>
+                    Already have an account?{" "}
+                    <Button
+                      onClick={() => setIsLoginMode((prevState) => !prevState)}
+                    >
+                      Login
+                    </Button>
+                  </Typography>
+                )}
+              </Form>
+            );
+          }}
+        </Formik>
       )}
     </>
   );

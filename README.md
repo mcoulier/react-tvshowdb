@@ -12,8 +12,8 @@ React application that queries the [TVmaze API](https://www.tvmaze.com/api). Cli
 - [x] Manage user login state w/ Context
 - [x] JSON Web Token Authentication
 - [x] Store users in MongoDB
+- [x] Login input validation
 - [ ] Further styling
-- [ ] Login input validation
 - [ ] Users can save/delete likes
 - [ ] More user features (delete, edit)
 - [ ] Add authorisation routes
