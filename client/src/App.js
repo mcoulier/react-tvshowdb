@@ -1,8 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 
 import Fetch from "./Components/Fetch";
 import Header from "./Components/Header";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  Switch,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import ShowDetail from "./Components/ShowDetail";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -33,6 +38,7 @@ function App() {
   const [userId, setUserId] = useState(false);
   const [username, setUsername] = useState(false);
   const [tokenExpiration, setTokenExpiration] = useState();
+  const auth = useContext(AuthContext);
 
   const login = useCallback((uid, username, token, expirationDate) => {
     setUsername(username);
@@ -107,9 +113,11 @@ function App() {
             <Route path="/login">
               <Auth />
             </Route>
-            <Route path="/user">
-              <UserDetail />
-            </Route>
+            {!!token ? (
+              <Route path="/user" component={UserDetail} />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Switch>
           <Footer />
         </Router>
