@@ -29,11 +29,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
   },
   showContent: {
-    margin: "10px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   heartIcon: {
     "&:active": {

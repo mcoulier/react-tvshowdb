@@ -42,7 +42,7 @@ export default function Header() {
         <Toolbar>
           <Link to="/" className={classes.title}>
             <img src={cave} width="40px" alt="cave" />
-            <Typography style={{ marginTop: "10px" }} variant="h6">
+            <Typography style={{ marginTop: "10px" }} variant="h5">
               ZapZilla
             </Typography>
           </Link>
