@@ -1,15 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../context/auth-context";
-
-import heartIcon from "../assets/heart.png";
-import tvIcon from "../assets/tvIcon.png";
-import clockIcon from "../assets/clockIcon.png";
+import React, { useEffect, useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
 
 import { useParams } from "react-router-dom";
 import defaultImg from "../assets/defaultImage.jpg";
+import { ShowContent } from "./ShowContent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,16 +27,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-  },
-  heartIcon: {
-    "&:active": {
-      transform: "scale(0.95)",
-    },
-  },
-  genres: {
-    background: "#F5CB5C",
-    borderRadius: "30px",
-    color: "black",
+    alignItems: "center",
+    maxWidth: "400px",
+    minWidth: "300px",
+    width: "90%",
   },
 }));
 
@@ -49,7 +38,6 @@ export default function ShowDetail() {
   const classes = useStyles();
   const [data, setData] = useState([]);
   const params = useParams();
-  const auth = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchUrl() {
@@ -66,30 +54,6 @@ export default function ShowDetail() {
     fetchUrl();
   }, [params.showId]);
 
-  const updateLike = async () => {
-    if (auth.userId) {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/users/${auth.userId}/like`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              showId: params.showId,
-              showName: data.name,
-            }),
-          }
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      alert("You need to be logged in to like!");
-    }
-  };
-
   return (
     <div className={classes.root}>
       <img
@@ -103,35 +67,7 @@ export default function ShowDetail() {
         alt="cover"
       />
       <div className={classes.showContent}>
-        <Typography variant="h4">
-          {data.name}
-          <img
-            onClick={updateLike}
-            src={heartIcon}
-            className={classes.heartIcon}
-            width="30px"
-            alt="heart icon"
-          />
-        </Typography>
-        {data.genres &&
-          data?.genres.map((genre, index) => {
-            return (
-              <Typography key={index} className={classes.genres}>
-                {genre}
-              </Typography>
-            );
-          })}
-        <Typography>{data?.rating?.average}</Typography>
-        {data?.averageRuntime && (
-          <Typography>
-            <img src={clockIcon} alt="clock icon" width="30px" />
-            {data?.averageRuntime}
-          </Typography>
-        )}
-        <Typography>Status: {data?.status}</Typography>
-        <Typography>
-          <img src={tvIcon} alt="tv icon" width="30px" /> {data?.network?.name}
-        </Typography>
+        <ShowContent data={data} />
       </div>
     </div>
   );

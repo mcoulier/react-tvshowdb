@@ -30,8 +30,6 @@ export default function Auth() {
   const auth = useContext(AuthContext);
 
   const handleAuth = async (username, email, password) => {
-    //e.preventDefault();
-
     if (!isLoginMode) {
       try {
         const response = await fetch(
@@ -71,8 +69,6 @@ export default function Auth() {
           }),
         });
         const responseData = await response.json();
-        console.log(responseData);
-
         auth.login(
           responseData.userId,
           responseData.username,
@@ -112,7 +108,7 @@ export default function Auth() {
               .min(8, "Password should be of minimum 8 characters length")
               .required("Password is required"),
           })}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting }) => {
             setSubmitting(true);
             handleAuth(values.username, values.email, values.password);
           }}
@@ -171,7 +167,6 @@ export default function Auth() {
                   style={{ background: "#f5cb5c", marginTop: "10px" }}
                   variant="contained"
                   disabled={isSubmitting}
-                  //onClick={handleAuth}
                   type="submit"
                 >
                   {!isLoginMode ? "Register" : "Login"}
