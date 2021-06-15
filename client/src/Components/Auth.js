@@ -174,11 +174,11 @@ export default function Auth() {
                 {!isLoginMode && (
                   <Typography>
                     Already have an account?{" "}
-                    <Button
+                    <Typography
                       onClick={() => setIsLoginMode((prevState) => !prevState)}
                     >
                       Login
-                    </Button>
+                    </Typography>
                   </Typography>
                 )}
               </Form>

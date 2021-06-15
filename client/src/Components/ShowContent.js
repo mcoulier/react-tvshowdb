@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { useParams } from "react-router-dom";
 
@@ -37,7 +37,11 @@ const useStyles = makeStyles((theme) => ({
   icons: {
     marginTop: "30px",
     display: "flex",
-    flexFlox: "row wrap",
+    flexFlow: "row wrap",
+  },
+  iconText: {
+    display: "flex",
+    flexFlow: "row wrap",
   },
 }));
 
@@ -91,16 +95,10 @@ export const ShowContent = ({ data }) => {
       </div>
       <div className={classes.icons}>
         {data?.rating?.average && (
-          <Typography>
-            <img src={starIcon} alt="clock icon" width="60px" />
-            {data?.rating?.average}
-          </Typography>
+          <img src={starIcon} alt="clock icon" width="60px" />
         )}
         {data?.averageRuntime && (
-          <Typography>
-            <img src={clockIcon} alt="clock icon" width="60px" />
-            {data?.averageRuntime}
-          </Typography>
+          <img src={clockIcon} alt="clock icon" width="60px" />
         )}
         {data?.status && (
           <Typography>
@@ -114,6 +112,11 @@ export const ShowContent = ({ data }) => {
             {data?.network?.name}
           </Typography>
         )}
+      </div>
+      <div className={classes.iconText}>
+        <Typography>{data?.rating?.average} </Typography>
+
+        <Typography>{data?.averageRuntime}</Typography>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import Fetch from "./Components/Fetch";
 import Header from "./Components/Header";
@@ -38,7 +38,6 @@ function App() {
   const [userId, setUserId] = useState(false);
   const [username, setUsername] = useState(false);
   const [tokenExpiration, setTokenExpiration] = useState();
-  const auth = useContext(AuthContext);
 
   const login = useCallback((uid, username, token, expirationDate) => {
     setUsername(username);
