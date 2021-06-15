@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/auth-context";
 import { useParams } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import starIcon from "../assets/star.png";
 
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import PopUp from "./PopUp";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -49,6 +50,7 @@ export const ShowContent = ({ data }) => {
   const auth = useContext(AuthContext);
   const params = useParams();
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const updateLike = async () => {
     if (auth.userId) {
@@ -67,8 +69,12 @@ export const ShowContent = ({ data }) => {
         console.log(err);
       }
     } else {
-      alert("You need to be logged in to like!");
+      setOpen(true);
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -118,6 +124,7 @@ export const ShowContent = ({ data }) => {
 
         <Typography>{data?.averageRuntime}</Typography>
       </div>
+      <PopUp open={open} handleClose={handleClose} />
     </>
   );
 };
