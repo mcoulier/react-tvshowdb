@@ -39,7 +39,7 @@ export default function PopUp({ open, handleClose }) {
           to="/login"
           style={{ background: "#f5cb5c", marginTop: "10px" }}
         >
-          Register / Login
+          Log in / Register
         </Button>
       </div>
     </Modal>

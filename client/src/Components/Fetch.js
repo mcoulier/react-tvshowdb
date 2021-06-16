@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, TextField, Typography, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ShowList from "./ShowList";
+import remoteIcon from "../assets/remote-control.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "20px",
-    "& .MuiFormLabel-root.Mui-focused": {
+    width: "100vw",
+    maxWidth: "1400px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    margin: "10px",
+    "& .MuiFormLabel-root": {
       color: "#f5cb5c",
     },
     "& .MuiOutlinedInput-root.Mui-focused fieldset": {
       borderColor: "#f5cb5c",
+    },
+    "& .MuiInputBase-input": {
+      color: "#fafafa",
     },
   },
   showList: {
@@ -77,8 +85,9 @@ export default function Fetch() {
           style={{ backgroundColor: "#f5cb5c", marginLeft: "8px" }}
           type="submit"
           variant="contained"
+          startIcon={<img src={remoteIcon} height="30px" alt="remote icon" />}
         >
-          Search
+          Search{" "}
         </Button>
       </form>
       <div className={classes.showList}>

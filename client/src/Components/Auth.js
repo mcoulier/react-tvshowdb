@@ -8,18 +8,28 @@ import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    "& .MuiFormLabel-root.Mui-focused": {
+    "& .MuiFormLabel-root": {
       color: "#f5cb5c",
     },
     "& .MuiInput-underline::after": {
       borderColor: "#f5cb5c",
     },
+    "& .MuiInputBase-input": {
+      color: "#fafafa",
+    },
     display: "flex",
     flexDirection: "column",
     marginLeft: "auto",
     marginRight: "auto",
-    width: "50%",
-    marginTop: "20px",
+    width: "60%",
+    maxWidth: "1000px",
+    marginTop: "100px",
+    backgroundColor: "#242423",
+    padding: "20px",
+  },
+  formLower: {
+    marginTop: "5px",
+    color: "#f5cb5c",
   },
 }));
 
@@ -97,7 +107,7 @@ export default function Auth() {
             showUsername: yup.boolean(),
             username: yup.string("Enter your username").when("showUsername", {
               is: !isLoginMode,
-              then: yup.string("Username is required").required(),
+              then: yup.string().required("Username is required"),
             }),
             email: yup
               .string("Enter your email")
@@ -149,7 +159,6 @@ export default function Auth() {
                   error={errors.email && touched.email}
                   margin="normal"
                 />
-
                 <TextField
                   label="Password"
                   name="password"
@@ -169,17 +178,15 @@ export default function Auth() {
                   disabled={isSubmitting}
                   type="submit"
                 >
-                  {!isLoginMode ? "Register" : "Login"}
+                  {!isLoginMode ? "Register" : "Log In"}
                 </Button>
                 {!isLoginMode && (
-                  <Typography>
-                    Already have an account?{" "}
-                    <Button
-                      onClick={() => setIsLoginMode((prevState) => !prevState)}
-                    >
-                      Login
-                    </Button>
-                  </Typography>
+                  <Button
+                    className={classes.formLower}
+                    onClick={() => setIsLoginMode((prevState) => !prevState)}
+                  >
+                    Already have an account?
+                  </Button>
                 )}
               </Form>
             );
