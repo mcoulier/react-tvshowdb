@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, Typography } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
 import { Formik, Form } from "formik";
 import * as yup from "yup";

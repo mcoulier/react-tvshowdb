@@ -3,8 +3,18 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {
+  Typography,
+  Button,
+  CircularProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
   },
+  table: {
+    backgroundColor: theme.palette.action.selected,
+  }
 }));
 
 export const UserDetail = () => {
@@ -85,22 +98,35 @@ export const UserDetail = () => {
         ) : (
           <>
             <Typography variant="h5">Likes</Typography>
-            {userLikes.length ? (
-              userLikes.map((like, id) => (
-                <Typography key={like._id}>
-                  <Link
-                    to={`/shows/${like.showId}`}
-                    style={{ textDecoration: "none", color: "#F5CB5C" }}
-                  >
-                    {like.showName}
-                  </Link>
-                </Typography>
-              ))
-            ) : (
-              <Typography className={classes.spinner}>
-                No likes yet...
-              </Typography>
-            )}
+            <TableContainer className={classes.table}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="right">Date liked</TableCell>
+                  </TableRow>
+                  {userLikes.length ? (
+                    userLikes.map((like, id) => (
+                      <TableRow key={like._id}>
+                        <TableCell>
+                          <Link
+                            to={`/shows/${like.showId}`}
+                            style={{ textDecoration: "none", color: "#F5CB5C" }}
+                          >
+                            {like.showName}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="right">{like.date}</TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <Typography className={classes.spinner}>
+                      No likes yet...
+                    </Typography>
+                  )}
+                </TableHead>
+              </Table>
+            </TableContainer>
           </>
         )}
       </div>
