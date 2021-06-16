@@ -14,7 +14,6 @@ import cave from "../assets/godzilla.png";
 import { AuthContext } from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   appBar: {
     flexGrow: 1,
     background: "#242423",
@@ -39,7 +38,7 @@ export default function Header() {
   const auth = useContext(AuthContext);
 
   return (
-    <div className={classes.root}>
+    <>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Link to="/" className={classes.title}>
@@ -69,6 +68,6 @@ export default function Header() {
           )}
         </Toolbar>
       </AppBar>
-    </div>
+    </>
   );
 }

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#242423",
     padding: "2px",
     borderTop: "solid #f5cb5c",
+    marginTop: "20px"
   },
 }));
 

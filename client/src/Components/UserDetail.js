@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
-
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
   Button,
   CircularProgress,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -52,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     backgroundColor: theme.palette.action.selected,
-  }
+  },
 }));
 
 export const UserDetail = () => {
@@ -105,6 +103,8 @@ export const UserDetail = () => {
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Date liked</TableCell>
                   </TableRow>
+                </TableHead>
+                <TableBody>
                   {userLikes.length ? (
                     userLikes.map((like, id) => (
                       <TableRow key={like._id}>
@@ -124,7 +124,7 @@ export const UserDetail = () => {
                       No likes yet...
                     </Typography>
                   )}
-                </TableHead>
+                </TableBody>
               </Table>
             </TableContainer>
           </>

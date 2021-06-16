@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "center",
+    marginBottom: "20px",
   },
   showCard: {
     position: "relative",

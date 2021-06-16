@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles((theme) => ({
   showCover: {
     "&:hover": {
-      //boxShadow: "-3px -3px #F5CB5C",
       transform: "scale(1.01)",
+      opacity: "0.97",
     },
   },
   rating: {

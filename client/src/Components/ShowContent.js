@@ -13,15 +13,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import PopUp from "./PopUp";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   heartIcon: {
+    "&:hover": {
+      opacity: "0.8",
+    },
     "&:active": {
       transform: "scale(0.95)",
     },
-  },
-  title: {
-    marginTop: "20px",
-    marginBottom: "20px",
   },
   genreContainer: {
     display: "flex",
@@ -34,15 +32,16 @@ const useStyles = makeStyles((theme) => ({
     width: "fit-content",
     padding: "1px 10px",
     margin: "5px",
+    marginTop: "40px",
   },
   icons: {
     marginTop: "30px",
     display: "flex",
-    flexFlow: "row wrap",
-  },
-  iconText: {
-    display: "flex",
-    flexFlow: "row wrap",
+    flexFlow: "column wrap",
+    alignItems: "center",
+    "& img": {
+      paddingTop: "10px",
+    },
   },
 }));
 
@@ -85,7 +84,7 @@ export const ShowContent = ({ data }) => {
           onClick={updateLike}
           src={heartIcon}
           className={classes.heartIcon}
-          width="25px"
+          width="30px"
           alt="heart icon"
         />
       </Typography>
@@ -101,28 +100,29 @@ export const ShowContent = ({ data }) => {
       </div>
       <div className={classes.icons}>
         {data?.rating?.average && (
-          <img src={starIcon} alt="clock icon" width="60px" />
+          <>
+            <img src={starIcon} alt="star icon" width="50px" />
+            <Typography>Rating: {data?.rating?.average}</Typography>
+          </>
         )}
         {data?.averageRuntime && (
-          <img src={clockIcon} alt="clock icon" width="60px" />
+          <>
+            <img src={clockIcon} alt="clock icon" width="50px" />
+            <Typography>Average Runtime: {data?.averageRuntime}</Typography>
+          </>
         )}
         {data?.status && (
-          <Typography>
-            <img src={theaterIcon} alt="clock icon" width="60px" />
-            {data?.status}
-          </Typography>
+          <>
+            <img src={theaterIcon} alt="theater icon" width="50px" />
+            <Typography>Status: {data?.status}</Typography>
+          </>
         )}
         {data?.network?.name && (
-          <Typography>
-            <img src={tvIcon} alt="tv icon" width="60px" />{" "}
-            {data?.network?.name}
-          </Typography>
+          <>
+            <img src={tvIcon} alt="tv icon" width="50px" />{" "}
+            <Typography>Network: {data?.network?.name}</Typography>
+          </>
         )}
-      </div>
-      <div className={classes.iconText}>
-        <Typography>{data?.rating?.average} </Typography>
-
-        <Typography>{data?.averageRuntime}</Typography>
       </div>
       <PopUp open={open} handleClose={handleClose} />
     </>

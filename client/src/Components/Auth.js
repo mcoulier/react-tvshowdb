@@ -5,6 +5,7 @@ import { TextField, Button } from "@material-ui/core";
 import { AuthContext } from "../context/auth-context";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
+import dinoIcon from "../assets/dino.png";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -30,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
   formLower: {
     marginTop: "5px",
     color: "#f5cb5c",
+  },
+  loginDino: {
+    position: "absolute",
+    top: "70px",
+    transform: "scaleX(-1)",
   },
 }));
 
@@ -135,6 +141,12 @@ export default function Auth() {
             } = props;
             return (
               <Form onSubmit={handleSubmit} className={classes.form}>
+                <img
+                  className={classes.loginDino}
+                  width="130px"
+                  src={dinoIcon}
+                  alt="dino icon"
+                />
                 {!isLoginMode && (
                   <TextField
                     label="Username"

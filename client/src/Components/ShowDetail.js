@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid",
     marginTop: "40px",
     marginBottom: "40px",
+    paddingTop: "10px",
+    paddingBottom: "10px",
     background: `#242423`,
     color: "#F5CB5C",
     width: "auto",
@@ -28,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    maxWidth: "400px",
+    maxWidth: "420px",
     minWidth: "300px",
-    width: "90%",
+    textAlign: "center",
   },
 }));
 
