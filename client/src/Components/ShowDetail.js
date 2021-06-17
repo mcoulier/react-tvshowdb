@@ -45,7 +45,7 @@ export default function ShowDetail() {
     async function fetchUrl() {
       try {
         let response = await fetch(
-          `http://api.tvmaze.com/shows/${params.showId}`
+          `https://api.tvmaze.com/shows/${params.showId}`
         );
         response = await response.json();
         setData(response);

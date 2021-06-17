@@ -91,11 +91,11 @@ export const UserDetail = () => {
         </Link>
       </div>
       <div className={classes.showLikes}>
+      <Typography variant="h5">Likes</Typography>
         {isLoading ? (
           <CircularProgress className={classes.spinner} />
         ) : (
-          <>
-            <Typography variant="h5">Likes</Typography>
+          <>            
             <TableContainer className={classes.table}>
               <Table>
                 <TableHead>

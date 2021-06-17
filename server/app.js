@@ -2,6 +2,7 @@ const express = require("express");
 const port = process.env.PORT || 8080;
 const bodyParser = require("body-parser");
 const userRoutes = require("./routes/user-routes");
+const HttpError = require("./models/error");
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
@@ -20,12 +21,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://zapzilla.netlify.app");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, HEAD, POST, PATCH, PUT, DELETE"
+  );
   next();
 });
 

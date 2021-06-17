@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexFlow: "column wrap",
     alignItems: "center",
-    "& img": {
+    "& img, p": {
       paddingTop: "10px",
     },
   },
@@ -81,8 +81,6 @@ export const ShowContent = ({ data }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  console.log(showLikeModal)
 
   return (
     <>

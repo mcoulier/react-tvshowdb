@@ -44,7 +44,7 @@ export default function Fetch() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [url, setUrl] = useState(
-    "http://api.tvmaze.com/search/shows?q=the+wire"
+    "https://api.tvmaze.com/search/shows?q=the+wire"
   );
   const classes = useStyles();
 
@@ -67,7 +67,7 @@ export default function Fetch() {
   };
 
   const handleSubmit = (e) => {
-    setUrl(`http://api.tvmaze.com/search/shows?q=${query}`);
+    setUrl(`https://api.tvmaze.com/search/shows?q=${query}`);
     e.preventDefault();
   };
 

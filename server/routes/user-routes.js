@@ -18,6 +18,6 @@ router.patch("/:uid/like", usersController.updateLike);
 router.delete("/:uid", usersController.deleteLike);
 
 //Routes after need valid token
-router.use(checkToken);
+/* router.use(checkToken); */
 
 module.exports = router;
