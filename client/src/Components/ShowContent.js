@@ -50,20 +50,26 @@ export const ShowContent = ({ data }) => {
   const params = useParams();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [showLikeModal, setShowLikeModal] = useState(false);
 
   const updateLike = async () => {
     if (auth.userId) {
       try {
-        await fetch(`http://localhost:8080/api/users/${auth.userId}/like`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            showId: params.showId,
-            showName: data.name,
-          }),
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/users/${auth.userId}/like`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              showId: params.showId,
+              showName: data.name,
+            }),
+          }
+        );
+        const responseData = await response.json();
+        setShowLikeModal(responseData.isAlreadyLiked);
       } catch (err) {
         console.log(err);
       }
@@ -75,6 +81,8 @@ export const ShowContent = ({ data }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(showLikeModal)
 
   return (
     <>
@@ -90,7 +98,7 @@ export const ShowContent = ({ data }) => {
       </Typography>
       <div className={classes.genreContainer}>
         {data.genres &&
-          data?.genres.map((genre, index) => {
+          data.genres.map((genre, index) => {
             return (
               <Typography key={index} className={classes.genres}>
                 {genre}
@@ -102,25 +110,25 @@ export const ShowContent = ({ data }) => {
         {data?.rating?.average && (
           <>
             <img src={starIcon} alt="star icon" width="50px" />
-            <Typography>Rating: {data?.rating?.average}</Typography>
+            <Typography>Rating: {data.rating.average}</Typography>
           </>
         )}
         {data?.averageRuntime && (
           <>
             <img src={clockIcon} alt="clock icon" width="50px" />
-            <Typography>Average Runtime: {data?.averageRuntime}</Typography>
+            <Typography>Average Runtime: {data.averageRuntime}</Typography>
           </>
         )}
         {data?.status && (
           <>
             <img src={theaterIcon} alt="theater icon" width="50px" />
-            <Typography>Status: {data?.status}</Typography>
+            <Typography>Status: {data.status}</Typography>
           </>
         )}
         {data?.network?.name && (
           <>
             <img src={tvIcon} alt="tv icon" width="50px" />{" "}
-            <Typography>Network: {data?.network?.name}</Typography>
+            <Typography>Network: {data.network.name}</Typography>
           </>
         )}
       </div>
