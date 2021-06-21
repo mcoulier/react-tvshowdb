@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
-import Fetch from "./Components/Fetch";
+import Main from "./Components/Main";
 import Header from "./Components/Header";
 import {
   Route,
@@ -104,7 +104,7 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/" component={Fetch} />
+            <Route exact path="/" component={Main} />
             <Route path="/shows/:showId" component={ShowDetail} />
             <Route path="/login" component={Auth} />
             {!!token ? (

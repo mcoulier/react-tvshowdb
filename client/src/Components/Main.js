@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Fetch() {
+export default function Main() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [url, setUrl] = useState(
