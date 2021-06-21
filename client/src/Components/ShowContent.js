@@ -8,8 +8,9 @@ import clockIcon from "../assets/clockIcon.png";
 import theaterIcon from "../assets/theater.png";
 import starIcon from "../assets/star.png";
 
-import { Typography } from "@material-ui/core";
+import { Typography, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import MuiAlert from "@material-ui/lab/Alert";
 import PopUp from "./PopUp";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,12 +51,13 @@ export const ShowContent = ({ data }) => {
   const params = useParams();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [showLikeModal, setShowLikeModal] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [IsShowLiked, setIsShowLiked] = useState(false);
 
   const updateLike = async () => {
     if (auth.userId) {
       try {
-        const response = await fetch(
+        let response = await fetch(
           `http://localhost:8080/api/users/${auth.userId}/like`,
           {
             method: "PATCH",
@@ -68,8 +70,9 @@ export const ShowContent = ({ data }) => {
             }),
           }
         );
-        const responseData = await response.json();
-        setShowLikeModal(responseData.isAlreadyLiked);
+        response = await response.json();
+        setIsShowLiked(response.isAlreadyLiked);
+        setSnackOpen(true);
       } catch (err) {
         console.log(err);
       }
@@ -84,6 +87,25 @@ export const ShowContent = ({ data }) => {
 
   return (
     <>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackOpen(false)}
+      >
+        {IsShowLiked ? (
+          <MuiAlert variant="filled" severity="warning">
+            Show already liked!
+          </MuiAlert>
+        ) : (
+          <MuiAlert variant="filled" severity="success">
+            Show liked!
+          </MuiAlert>
+        )}
+      </Snackbar>
       <Typography className={classes.title} variant="h4">
         {data.name}{" "}
         <img

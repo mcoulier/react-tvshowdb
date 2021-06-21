@@ -2,17 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Button,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
+import { Typography, Button, CircularProgress } from "@material-ui/core";
+import { UserLikes } from "./UserLikes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +39,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
   },
-  table: {
-    backgroundColor: theme.palette.action.selected,
-  },
 }));
 
 export const UserDetail = () => {
@@ -65,13 +53,13 @@ export const UserDetail = () => {
     const fetchUrl = async () => {
       if (auth.userId) {
         try {
-          const response = await fetch(
+          let response = await fetch(
             `http://localhost:8080/api/users/${auth.userId}/userlikes`
           );
-          const responseData = await response.json();
+          response = await response.json();
           setIsLoading(false);
-          setUserData(responseData.result);
-          setUserLikes(responseData.result.likes);
+          setUserData(response.result);
+          setUserLikes(response.result.likes);
         } catch (err) {
           alert(err);
         }
@@ -91,43 +79,11 @@ export const UserDetail = () => {
         </Link>
       </div>
       <div className={classes.showLikes}>
-      <Typography variant="h5">Likes</Typography>
+        <Typography variant="h5">Likes</Typography>
         {isLoading ? (
           <CircularProgress className={classes.spinner} />
         ) : (
-          <>            
-            <TableContainer className={classes.table}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Date liked</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {userLikes.length ? (
-                    userLikes.map((like, id) => (
-                      <TableRow key={like._id}>
-                        <TableCell>
-                          <Link
-                            to={`/shows/${like.showId}`}
-                            style={{ textDecoration: "none", color: "#F5CB5C" }}
-                          >
-                            {like.showName}
-                          </Link>
-                        </TableCell>
-                        <TableCell align="right">{like.date}</TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <Typography className={classes.spinner}>
-                      No likes yet...
-                    </Typography>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </>
+          <UserLikes likes={userLikes} />
         )}
       </div>
     </div>
