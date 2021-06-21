@@ -38,7 +38,7 @@ export const UserLikes = ({ likes }) => {
           <TableBody>
             {likes.length ? (
               likes.map((like, id) => (
-                <TableRow key={like._id} hover="true">
+                <TableRow key={like._id} hover={true}>
                   <TableCell>
                     <Link
                       to={`/shows/${like.showId}`}

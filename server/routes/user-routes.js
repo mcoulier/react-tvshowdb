@@ -11,11 +11,13 @@ router.post("/register", usersController.register);
 
 router.post("/login", usersController.login);
 
+router.delete("/:uid/deleteUser", usersController.deleteUser);
+
 router.get("/:uid/userlikes", usersController.userLikes);
 
 router.patch("/:uid/like", usersController.updateLike);
 
-router.delete("/:uid", usersController.deleteLike);
+router.delete("/:uid/unlike", usersController.deleteLike);
 
 //Routes after need valid token
 /* router.use(checkToken); */

@@ -10,18 +10,17 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: 0,
     left: 0,
-    width: "100%",
+    right: 0,
     background: "#242423",
-    padding: "2px",
-    borderTop: "solid #f5cb5c",
-    marginTop: "20px"
+    padding: "4px",
+    marginTop: "20px",
   },
 }));
 
 export default function Footer() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <footer className={classes.root}>
       <Typography>2021 MC</Typography>
       <Typography style={{ paddingRight: "5px" }}>
         Data by{" "}
@@ -29,6 +28,6 @@ export default function Footer() {
           TVmaze
         </a>
       </Typography>
-    </div>
+    </footer>
   );
 }

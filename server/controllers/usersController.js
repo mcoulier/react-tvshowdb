@@ -108,6 +108,16 @@ const login = async (req, res, next) => {
   });
 };
 
+const deleteUser = async (req, res, next) => {
+  const userId = req.params.uid;
+  try {
+    await User.findByIdAndRemove(userId);
+  } catch {
+    const error = new HttpError("Deleting user failed.", 500);
+    return next(error);
+  }
+};
+
 const updateLike = async (req, res, next) => {
   const { showId, showName } = req.body;
   const userId = req.params.uid;
@@ -148,7 +158,24 @@ const updateLike = async (req, res, next) => {
   });
 };
 
-const deleteLike = async (req, res, next) => {};
+const deleteLike = async (req, res, next) => {
+  const userId = req.params.uid;
+
+  /* try {
+    const result = await User.findByIdAndRemove(
+      userId,
+      { $addToSet: { likes: { showId: showId, showName: showName } } },
+      { safe: true, upsert: true },
+      function (err, model) {
+        //console.log(err);
+      } 
+    );
+    isAlreadyLiked = false;
+  } catch (err) {
+    const error = new HttpError("Like show failed.", 500);
+    return next(error);
+  } */
+};
 
 const userLikes = async (req, res, next) => {
   const userId = req.params.uid;
@@ -157,7 +184,7 @@ const userLikes = async (req, res, next) => {
   try {
     result = await User.findById(userId);
   } catch {
-    const error = new HttpError("Like show failed.", 500);
+    const error = new HttpError("Error getting user shows.", 500);
     return next(error);
   }
 
@@ -168,6 +195,7 @@ const userLikes = async (req, res, next) => {
 
 exports.register = register;
 exports.login = login;
+exports.deleteUser = deleteUser;
 exports.updateLike = updateLike;
 exports.deleteLike = deleteLike;
 exports.userLikes = userLikes;

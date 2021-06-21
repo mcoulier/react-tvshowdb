@@ -8,6 +8,7 @@ import {
   Switch,
   BrowserRouter as Router,
 } from "react-router-dom";
+
 import ShowDetail from "./Components/ShowDetail";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "hidden",
     overflowY: "auto",
     position: "relative",
-    top: 0,
+    /*     top: 0,
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0, */
   },
 }));
 
@@ -103,15 +104,9 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Fetch />
-            </Route>
-            <Route path="/shows/:showId">
-              <ShowDetail />
-            </Route>
-            <Route path="/login">
-              <Auth />
-            </Route>
+            <Route exact path="/" component={Fetch} />
+            <Route path="/shows/:showId" component={ShowDetail} />
+            <Route path="/login" component={Auth} />
             {!!token ? (
               <Route path="/user" component={UserDetail} />
             ) : (

@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, CircularProgress } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { UserLikes } from "./UserLikes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexFlow: "row wrap",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
     marginTop: "40px",
+    marginBottom: "20px",
   },
   userInfo: {
     display: "flex",
@@ -25,15 +27,22 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid",
   },
   showLikes: {
-    display: "flex",
-    flexFlow: "column wrap",
     border: "solid #242423",
     width: "60%",
     padding: "20px",
     background: "#242423",
     borderTop: "1px solid",
     borderBottom: "1px solid",
-    marginBottom: "40px",
+    marginBottom: "20px",
+  },
+  lowerProfile: {
+    border: "solid #242423",
+    width: "60%",
+    padding: "20px",
+    background: "#242423",
+    marginBottom: "20px",
+    borderTop: "1px solid",
+    borderBottom: "1px solid",
   },
   spinner: {
     marginLeft: "auto",
@@ -68,10 +77,22 @@ export const UserDetail = () => {
     fetchUrl();
   }, [auth]);
 
+  const deleteUser = async () => {
+    try {
+      auth.logout();
+      await fetch(`http://localhost:8080/api/users/${auth.userId}/deleteUser`, {
+        method: "DELETE",
+      });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.userInfo}>
         <Typography variant="h6">Hello {userData?.username}!</Typography>
+
         <Link to="/">
           <Button style={{ background: "#f5cb5c" }} onClick={auth.logout}>
             Logout
@@ -85,6 +106,16 @@ export const UserDetail = () => {
         ) : (
           <UserLikes likes={userLikes} />
         )}
+      </div>
+      <div className={classes.lowerProfile}>
+        {" "}
+        <Button
+          onClick={deleteUser}
+          style={{ background: "#F44336" }}
+          startIcon={<DeleteIcon />}
+        >
+          Delete Account
+        </Button>
       </div>
     </div>
   );
