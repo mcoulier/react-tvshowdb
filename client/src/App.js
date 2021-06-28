@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Suspense } from "react";
 
 import Main from "./Components/Main";
 import Header from "./Components/Header";
@@ -9,13 +9,15 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 
-import ShowDetail from "./Components/ShowDetail";
-
 import { makeStyles } from "@material-ui/core/styles";
-import Auth from "./Components/Auth";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
 import { UserDetail } from "./Components/UserDetail";
+import { CircularProgress } from "@material-ui/core";
+
+//const UserDetail = React.lazy(() => import("./Components/UserDetail"));
+const ShowDetail = React.lazy(() => import("./Components/ShowDetail"));
+const Auth = React.lazy(() => import("./Components/Auth"));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "hidden",
     overflowY: "auto",
     position: "relative",
+  },
+  spinner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
@@ -99,16 +106,18 @@ function App() {
       >
         <Router>
           <Header />
-          <Switch>
-            <Route exact path="/" component={Main} />
-            <Route path="/shows/:showId" component={ShowDetail} />
-            <Route path="/login" component={Auth} />
-            {!!token ? (
-              <Route path="/user" component={UserDetail} />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Switch>
+          <Suspense fallback={<div className={classes.spinner}><CircularProgress style={{ color: "#F5CB5C" }} /></div>}>
+            <Switch>
+              <Route exact path="/" component={Main} />
+              <Route path="/shows/:showId" component={ShowDetail} />
+              <Route path="/login" component={Auth} />
+              {!!token ? (
+                <Route path="/user" component={UserDetail} />
+              ) : (
+                <Redirect to="/" />
+              )}
+            </Switch>
+          </Suspense>
           <Footer />
         </Router>
       </AuthContext.Provider>

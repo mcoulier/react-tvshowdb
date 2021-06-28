@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   spinner: {
     marginLeft: "auto",
     marginRight: "auto",
+    color: "#F5CB5C",
   },
 }));
 

@@ -7,11 +7,9 @@ import remoteIcon from "../assets/remote-control.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100vw",
     maxWidth: "1400px",
     marginLeft: "auto",
     marginRight: "auto",
-    margin: "10px",
     "& .MuiFormLabel-root": {
       color: "#f5cb5c",
     },
@@ -21,10 +19,12 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputBase-input": {
       color: "#fafafa",
     },
+    "& form": {
+      margin: "20px",
+    },
   },
   showList: {
     margin: "10px",
-    padding: "10px",
     display: "flex",
     flexFlow: "row wrap",
     justifyContent: "center",

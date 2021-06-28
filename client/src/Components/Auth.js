@@ -125,8 +125,8 @@ export default function Auth() {
               .min(8, "Password should be of minimum 8 characters length")
               .required("Password is required"),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(true);
+          onSubmit={(values/* , { setSubmitting } */) => {
+            //setSubmitting(true);
             handleAuth(values.username, values.email, values.password);
           }}
         >
