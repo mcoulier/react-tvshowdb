@@ -31,6 +31,8 @@ export default function ShowList({ show }) {
         className={classes.showCover}
         src={show.image === null ? defaultImg : show.image.medium}
         alt="show cover"
+        width="210px"
+        height="295px"
       />
       <Typography>{show.name}</Typography>
     </>

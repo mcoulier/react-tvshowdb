@@ -77,6 +77,7 @@ export default function Main() {
         <TextField
           style={{ margin: 8, color: "white" }}
           label="Search show"
+          id="search"
           fullWidth
           variant="outlined"
           type="text"
@@ -86,7 +87,14 @@ export default function Main() {
           style={{ backgroundColor: "#f5cb5c", marginLeft: "8px" }}
           type="submit"
           variant="contained"
-          startIcon={<img src={remoteIcon} height="30px" alt="remote icon" />}
+          startIcon={
+            <img
+              src={remoteIcon}
+              height="30px"
+              width="30px"
+              alt="remote icon"
+            />
+          }
         >
           Search{" "}
         </Button>

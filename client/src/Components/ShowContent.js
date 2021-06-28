@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "column wrap",
     alignItems: "center",
     "& img, p": {
-      paddingTop: "10px",
+      paddingTop: "15px",
     },
   },
 }));
@@ -129,25 +129,25 @@ export const ShowContent = ({ data }) => {
       <div className={classes.icons}>
         {data?.rating?.average && (
           <>
-            <img src={starIcon} alt="star icon" width="50px" />
+            <img src={starIcon} alt="star icon" width="45px" />
             <Typography>Rating: {data.rating.average}</Typography>
           </>
         )}
         {data?.averageRuntime && (
           <>
-            <img src={clockIcon} alt="clock icon" width="50px" />
+            <img src={clockIcon} alt="clock icon" width="45px" />
             <Typography>Average Runtime: {data.averageRuntime}</Typography>
           </>
         )}
         {data?.status && (
           <>
-            <img src={theaterIcon} alt="theater icon" width="50px" />
+            <img src={theaterIcon} alt="theater icon" width="45px" />
             <Typography>Status: {data.status}</Typography>
           </>
         )}
         {data?.network?.name && (
           <>
-            <img src={tvIcon} alt="tv icon" width="50px" />{" "}
+            <img src={tvIcon} alt="tv icon" width="45px" />{" "}
             <Typography>Network: {data.network.name}</Typography>
           </>
         )}

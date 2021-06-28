@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
     background: "#242423",
     padding: "4px",
     marginTop: "20px",
+    color: "#919191",
+    fontSize: "12px",
   },
 }));
 
@@ -21,10 +23,15 @@ export default function Footer() {
   const classes = useStyles();
   return (
     <footer className={classes.root}>
-      <Typography>2021 MC</Typography>
-      <Typography style={{ paddingRight: "5px" }}>
+      <Typography variant="caption">2021 MC</Typography>
+      <Typography variant="caption">
         Data by{" "}
-        <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">
+        <a
+          style={{ color: "#919191" }}
+          href="https://www.tvmaze.com/api"
+          target="_blank"
+          rel="noreferrer"
+        >
           TVmaze
         </a>
       </Typography>

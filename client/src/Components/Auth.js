@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loginDino: {
     position: "absolute",
-    top: "70px",
+    top: "75px",
     transform: "scaleX(-1)",
   },
 }));
@@ -143,7 +143,7 @@ export default function Auth() {
               <Form onSubmit={handleSubmit} className={classes.form}>
                 <img
                   className={classes.loginDino}
-                  width="130px"
+                  width="115px"
                   src={dinoIcon}
                   alt="dino icon"
                 />
