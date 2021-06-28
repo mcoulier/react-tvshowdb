@@ -26,41 +26,39 @@ export const UserLikes = ({ likes }) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <TableContainer className={classes.table}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Date liked</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {likes.length ? (
-              likes.map((like, id) => (
-                <TableRow key={like._id} hover={true}>
-                  <TableCell>
-                    <Link
-                      to={`/shows/${like.showId}`}
-                      style={{ textDecoration: "none", color: "#F5CB5C" }}
-                    >
-                      {like.showName}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">{like.date}</TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
+    <TableContainer className={classes.table}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Date liked</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {likes.length ? (
+            likes.map((like, id) => (
+              <TableRow key={like._id} hover={true}>
                 <TableCell>
-                  <Typography>No likes yet...</Typography>
+                  <Link
+                    to={`/shows/${like.showId}`}
+                    style={{ textDecoration: "none", color: "#F5CB5C" }}
+                  >
+                    {like.showName}
+                  </Link>
                 </TableCell>
-                <TableCell />
+                <TableCell align="right">{like.date}</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>
+                <Typography>No likes yet...</Typography>
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };

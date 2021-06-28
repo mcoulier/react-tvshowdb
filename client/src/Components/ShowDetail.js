@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#F5CB5C",
     width: "auto",
     justifyContent: "center",
-  },
-  showCover: {
-    width: "90%",
-    margin: "10px",
+    "& > img": {
+      width: "90%",
+      margin: "10px",
+    },
   },
   showContent: {
     display: "flex",
@@ -59,7 +59,6 @@ export default function ShowDetail() {
   return (
     <div className={classes.root}>
       <img
-        className={classes.showCover}
         src={
           data && data.image && Object.keys(data.image).length
             ? data.image.medium

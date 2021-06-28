@@ -92,7 +92,6 @@ export const UserDetail = () => {
     <div className={classes.root}>
       <div className={classes.userInfo}>
         <Typography variant="h6">Hello {userData?.username}!</Typography>
-
         <Link to="/">
           <Button style={{ background: "#f5cb5c" }} onClick={auth.logout}>
             Logout

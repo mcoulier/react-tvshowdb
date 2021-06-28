@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     "& img, p": {
       paddingTop: "15px",
     },
+    "& img": {
+      width: "45px",
+      height: "45px",
+    },
   },
 }));
 
@@ -129,25 +133,25 @@ export const ShowContent = ({ data }) => {
       <div className={classes.icons}>
         {data?.rating?.average && (
           <>
-            <img src={starIcon} alt="star icon" width="45px" />
+            <img src={starIcon} alt="star icon" />
             <Typography>Rating: {data.rating.average}</Typography>
           </>
         )}
         {data?.averageRuntime && (
           <>
-            <img src={clockIcon} alt="clock icon" width="45px" />
+            <img src={clockIcon} alt="clock icon" />
             <Typography>Average Runtime: {data.averageRuntime}</Typography>
           </>
         )}
         {data?.status && (
           <>
-            <img src={theaterIcon} alt="theater icon" width="45px" />
+            <img src={theaterIcon} alt="theater icon" />
             <Typography>Status: {data.status}</Typography>
           </>
         )}
         {data?.network?.name && (
           <>
-            <img src={tvIcon} alt="tv icon" width="45px" />{" "}
+            <img src={tvIcon} alt="tv icon" />{" "}
             <Typography>Network: {data.network.name}</Typography>
           </>
         )}

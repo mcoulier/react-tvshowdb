@@ -99,7 +99,7 @@ export default function Main() {
           Search{" "}
         </Button>
       </form>
-      <div className={classes.showList}>
+      <section className={classes.showList}>
         {data.length ? (
           data.map((show, index) => (
             <div className={classes.showCard} key={show.show.id}>
@@ -116,7 +116,7 @@ export default function Main() {
         ) : (
           <Typography>No shows found</Typography>
         )}
-      </div>
+      </section>
     </div>
   );
 }

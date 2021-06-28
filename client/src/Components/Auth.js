@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputBase-input": {
       color: "#fafafa",
     },
+    "& img": {
+      position: "absolute",
+      top: "75px",
+      transform: "scaleX(-1)",
+      width: "115px",
+    },
     display: "flex",
     flexDirection: "column",
     marginLeft: "auto",
@@ -31,11 +37,6 @@ const useStyles = makeStyles((theme) => ({
   formLower: {
     marginTop: "5px",
     color: "#f5cb5c",
-  },
-  loginDino: {
-    position: "absolute",
-    top: "75px",
-    transform: "scaleX(-1)",
   },
 }));
 
@@ -142,8 +143,6 @@ export default function Auth() {
             return (
               <Form onSubmit={handleSubmit} className={classes.form}>
                 <img
-                  className={classes.loginDino}
-                  width="115px"
                   src={dinoIcon}
                   alt="dino icon"
                 />

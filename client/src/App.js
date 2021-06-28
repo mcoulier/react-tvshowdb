@@ -19,15 +19,11 @@ import { UserDetail } from "./Components/UserDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "#333533",
+    background: "#212121",
     minHeight: "100vh",
     overflowX: "hidden",
     overflowY: "auto",
     position: "relative",
-    /*     top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0, */
   },
 }));
 

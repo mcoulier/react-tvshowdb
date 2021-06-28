@@ -10,16 +10,6 @@ const useStyles = makeStyles((theme) => ({
       opacity: "0.97",
     },
   },
-  rating: {
-    display: "inline-block",
-    position: "absolute",
-    right: 0,
-    top: 0,
-    background: "green",
-    zIndex: 2,
-    marginRight: "5px",
-    color: "black",
-  },
 }));
 
 export default function ShowList({ show }) {
@@ -34,7 +24,7 @@ export default function ShowList({ show }) {
         width="210px"
         height="295px"
       />
-      <Typography>{show.name}</Typography>
+      <Typography variant="subtitle1">{show.name}</Typography>
     </>
   );
 }
