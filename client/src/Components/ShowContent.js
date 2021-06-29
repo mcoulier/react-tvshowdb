@@ -94,7 +94,7 @@ export const ShowContent = ({ data }) => {
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "left",
         }}
         open={snackOpen}
         autoHideDuration={3000}

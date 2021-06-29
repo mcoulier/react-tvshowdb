@@ -15,7 +15,6 @@ import { AuthContext } from "../context/auth-context";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    flexGrow: 1,
     background: "#242423",
   },
   menuBtn: {

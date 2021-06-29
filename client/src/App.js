@@ -111,7 +111,7 @@ function App() {
               <Route exact path="/" component={Main} />
               <Route path="/shows/:showId" component={ShowDetail} />
               <Route path="/login" component={Auth} />
-              {!!token ? (
+              {token ? (
                 <Route path="/user" component={UserDetail} />
               ) : (
                 <Redirect to="/" />

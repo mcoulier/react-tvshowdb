@@ -160,21 +160,25 @@ const updateLike = async (req, res, next) => {
 
 const deleteLike = async (req, res, next) => {
   const userId = req.params.uid;
+  const showId = req.params.sid;
+  let result;
 
-  /* try {
-    const result = await User.findByIdAndRemove(
+  try {
+    result = await User.findByIdAndUpdate(
       userId,
-      { $addToSet: { likes: { showId: showId, showName: showName } } },
-      { safe: true, upsert: true },
+      { $pull: { likes: { showId: showId } } },
       function (err, model) {
         //console.log(err);
-      } 
+      }
     );
-    isAlreadyLiked = false;
   } catch (err) {
-    const error = new HttpError("Like show failed.", 500);
+    const error = new HttpError("Delete show failed.", 500);
     return next(error);
-  } */
+  }
+
+  res.json({
+    result,
+  });
 };
 
 const userLikes = async (req, res, next) => {
