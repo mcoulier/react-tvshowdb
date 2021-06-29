@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "40px",
     marginBottom: "20px",
+    color: "#919191",
   },
   userInfo: {
     display: "flex",
@@ -36,13 +37,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
   },
   lowerProfile: {
-    border: "solid #242423",
+    display: "flex",
+    justifyContent: "flex-end",
     width: "60%",
     padding: "20px",
-    background: "#242423",
-    marginBottom: "20px",
-    borderTop: "1px solid",
-    borderBottom: "1px solid",
   },
   spinner: {
     marginLeft: "auto",
@@ -58,25 +56,36 @@ export const UserDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
 
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchUrl = async () => {
-      if (auth.userId) {
-        try {
-          let response = await fetch(
-            `http://localhost:8080/api/users/${auth.userId}/userlikes`
-          );
-          response = await response.json();
-          setIsLoading(false);
-          setUserData(response.result);
-          setUserLikes(response.result.likes);
-        } catch (err) {
-          alert(err);
-        }
+  const fetchUrl = async () => {
+    if (auth.userId) {
+      try {
+        let response = await fetch(
+          `http://localhost:8080/api/users/${auth.userId}/userlikes`
+        );
+        response = await response.json();
+        setIsLoading(false);
+        setUserData(response.result);
+        setUserLikes(response.result.likes);
+      } catch (err) {
+        setIsLoading(true);
+        alert(err);
       }
-    };
-    fetchUrl();
-  }, [auth]);
+    }
+  };
+
+  const deleteShow = async (showId) => {
+    try {
+      await fetch(
+        `http://localhost:8080/api/users/${auth.userId}/unlike/${showId}`,
+        {
+          method: "PUT",
+        }
+      );
+      fetchUrl();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const deleteUser = async () => {
     try {
@@ -88,6 +97,10 @@ export const UserDetail = () => {
       alert(err);
     }
   };
+
+  useEffect(() => {
+    fetchUrl();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -104,7 +117,7 @@ export const UserDetail = () => {
         {isLoading ? (
           <CircularProgress className={classes.spinner} />
         ) : (
-          <UserLikes likes={userLikes} />
+          <UserLikes likes={userLikes} handleDelete={deleteShow} />
         )}
       </div>
       <div className={classes.lowerProfile}>
