@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     justifyContent: "center",
     "& > img": {
-      width: "90%",
+      width: "100vw",
       margin: "10px",
     },
   },

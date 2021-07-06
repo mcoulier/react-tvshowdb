@@ -62,7 +62,7 @@ export const ShowContent = ({ data }) => {
     if (auth.userId) {
       try {
         let response = await fetch(
-          `http://localhost:8080/api/users/${auth.userId}/like`,
+          `https://tvshowdb.herokuapp.com/api/users/${auth.userId}/like`,
           {
             method: "PATCH",
             headers: {

@@ -4,18 +4,17 @@ import Main from "./Components/Main";
 import Header from "./Components/Header";
 import {
   Route,
-  Redirect,
   Switch,
   BrowserRouter as Router,
 } from "react-router-dom";
 
+import PrivateRoute from "../src/Components/PrivateRoute";
 import { makeStyles } from "@material-ui/core/styles";
 import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
 import { UserDetail } from "./Components/UserDetail";
 import { CircularProgress } from "@material-ui/core";
 
-//const UserDetail = React.lazy(() => import("./Components/UserDetail"));
 const ShowDetail = React.lazy(() => import("./Components/ShowDetail"));
 const Auth = React.lazy(() => import("./Components/Auth"));
 
@@ -106,16 +105,18 @@ function App() {
       >
         <Router>
           <Header />
-          <Suspense fallback={<div className={classes.spinner}><CircularProgress style={{ color: "#F5CB5C" }} /></div>}>
+          <Suspense
+            fallback={
+              <div className={classes.spinner}>
+                <CircularProgress style={{ color: "#F5CB5C" }} />
+              </div>
+            }
+          >
             <Switch>
               <Route exact path="/" component={Main} />
-              <Route path="/shows/:showId" component={ShowDetail} />
-              <Route path="/login" component={Auth} />
-              {token ? (
-                <Route path="/user" component={UserDetail} />
-              ) : (
-                <Redirect to="/" />
-              )}
+              <Route exact path="/shows/:showId" component={ShowDetail} />
+              <Route exact path="/login" component={Auth} />
+              <PrivateRoute exact path="/user" component={UserDetail} />
             </Switch>
           </Suspense>
           <Footer />

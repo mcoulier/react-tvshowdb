@@ -38,7 +38,7 @@ export const UserLikes = ({ likes, handleDelete }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {likes.length ? (
+          {likes && likes.length ? (
             likes.map((like) => (
               <TableRow key={like._id}>
                 <TableCell>

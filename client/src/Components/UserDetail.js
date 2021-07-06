@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
     borderTop: "1px solid",
     borderBottom: "1px solid",
+    "& button": {
+      background: "#f5cb5c",
+    },
   },
   showLikes: {
     border: "solid #242423",
@@ -41,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     width: "60%",
     padding: "20px",
+    "& button": {
+      background: "#F44336",
+    },
   },
   spinner: {
     marginLeft: "auto",
@@ -51,21 +57,20 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserDetail = () => {
   const auth = useContext(AuthContext);
-  const [userData, setUserData] = useState();
-  const [userLikes, setUserLikes] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
 
   const fetchUrl = async () => {
     if (auth.userId) {
       try {
+        setIsLoading(true);
         let response = await fetch(
-          `http://localhost:8080/api/users/${auth.userId}/userlikes`
+          `https://tvshowdb.herokuapp.com/api/users/${auth.userId}/userlikes`
         );
         response = await response.json();
         setIsLoading(false);
         setUserData(response.result);
-        setUserLikes(response.result.likes);
       } catch (err) {
         setIsLoading(true);
         alert(err);
@@ -76,7 +81,7 @@ export const UserDetail = () => {
   const deleteShow = async (showId) => {
     try {
       await fetch(
-        `http://localhost:8080/api/users/${auth.userId}/unlike/${showId}`,
+        `https://tvshowdb.herokuapp.com/api/users/${auth.userId}/unlike/${showId}`,
         {
           method: "PUT",
         }
@@ -90,9 +95,12 @@ export const UserDetail = () => {
   const deleteUser = async () => {
     try {
       auth.logout();
-      await fetch(`http://localhost:8080/api/users/${auth.userId}/deleteUser`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://tvshowdb.herokuapp.com/api/users/${auth.userId}/deleteUser`,
+        {
+          method: "DELETE",
+        }
+      );
     } catch (err) {
       alert(err);
     }
@@ -100,16 +108,14 @@ export const UserDetail = () => {
 
   useEffect(() => {
     fetchUrl();
-  }, []);
+  }, [auth.userId]);
 
   return (
     <div className={classes.root}>
       <div className={classes.userInfo}>
         <Typography variant="h6">Hello {userData?.username}!</Typography>
         <Link to="/">
-          <Button style={{ background: "#f5cb5c" }} onClick={auth.logout}>
-            Logout
-          </Button>
+          <Button onClick={auth.logout}>Logout</Button>
         </Link>
       </div>
       <div className={classes.showLikes}>
@@ -117,16 +123,11 @@ export const UserDetail = () => {
         {isLoading ? (
           <CircularProgress className={classes.spinner} />
         ) : (
-          <UserLikes likes={userLikes} handleDelete={deleteShow} />
+          <UserLikes likes={userData?.likes} handleDelete={deleteShow} />
         )}
       </div>
       <div className={classes.lowerProfile}>
-        {" "}
-        <Button
-          onClick={deleteUser}
-          style={{ background: "#F44336" }}
-          startIcon={<DeleteIcon />}
-        >
+        <Button onClick={deleteUser} startIcon={<DeleteIcon />}>
           Delete Account
         </Button>
       </div>

@@ -43,14 +43,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Auth() {
   const classes = useStyles();
   const [isLoginMode, setIsLoginMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const auth = useContext(AuthContext);
 
   const handleAuth = async (username, email, password) => {
     if (!isLoginMode) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/users/register",
+          "https://tvshowdb.herokuapp.com/api/users/register",
           {
             method: "POST",
             headers: {
@@ -69,13 +68,12 @@ export default function Auth() {
           responseData.username,
           responseData.token
         );
-        setIsLoggedIn(true);
       } catch (err) {
         console.log(err);
       }
     } else {
       try {
-        const response = await fetch("http://localhost:8080/api/users/login", {
+        const response = await fetch("https://tvshowdb.herokuapp.com/api/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -91,7 +89,6 @@ export default function Auth() {
           responseData.username,
           responseData.token
         );
-        setIsLoggedIn(true);
       } catch (err) {
         console.log(err);
       }
@@ -100,7 +97,7 @@ export default function Auth() {
 
   return (
     <>
-      {isLoggedIn ? (
+      {auth.isLoggedIn ? (
         <Redirect to="/user" />
       ) : (
         <Formik
@@ -125,8 +122,7 @@ export default function Auth() {
               .min(8, "Password should be of minimum 8 characters length")
               .required("Password is required"),
           })}
-          onSubmit={(values/* , { setSubmitting } */) => {
-            //setSubmitting(true);
+          onSubmit={(values) => {
             handleAuth(values.username, values.email, values.password);
           }}
         >
@@ -142,10 +138,7 @@ export default function Auth() {
             } = props;
             return (
               <Form onSubmit={handleSubmit} className={classes.form}>
-                <img
-                  src={dinoIcon}
-                  alt="dino icon"
-                />
+                <img src={dinoIcon} alt="dino icon" />
                 {!isLoginMode && (
                   <TextField
                     label="Username"
