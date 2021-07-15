@@ -64,7 +64,6 @@ export const UserDetail = () => {
   const fetchUrl = async () => {
     if (auth.userId) {
       try {
-        setIsLoading(true);
         let response = await fetch(
           `https://tvshowdb.herokuapp.com/api/users/${auth.userId}/userlikes`
         );

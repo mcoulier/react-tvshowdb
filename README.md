@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/mcoulier/react-tvshowdb/master/client/src/assets/zapzilla.png"></img>
 
-React application that queries the [TVmaze API](https://www.tvmaze.com/api). Clicking on image will send you to a detailed show page. Users will be able to log in and like shows. On personal user page there will be an overview of liked shows.
+React application that queries the [TVmaze API](https://www.tvmaze.com/api). Clicking on show image will send you to a detailed show page. Users can like shows to save them. On personal user page there is an overview of liked shows and the ability to delete them.
 
 ## To do
 
@@ -13,7 +13,7 @@ React application that queries the [TVmaze API](https://www.tvmaze.com/api). Cli
 - [x] JSON Web Token Authentication
 - [x] Store users in MongoDB
 - [x] Login input validation
-- [ ] Further styling
-- [ ] Users can save/delete likes
-- [ ] More user features (delete, edit)
-- [ ] Add authorisation routes
+- [x] Further styling
+- [x] Users can save/delete likes
+- [x] More user features (delete, edit)
+- [x] Add authorisation routes

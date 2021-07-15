@@ -73,7 +73,7 @@ export default function Main() {
 
   return (
     <div className={classes.root}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autocomplete="off">
         <TextField
           style={{ margin: 8, color: "white" }}
           label="Search show"
