@@ -78,8 +78,6 @@ export default function Main() {
     e.preventDefault();
   };
 
-  console.log(data)
-
   return (
     <div className={classes.root}>
       <form onSubmit={handleSubmit} autoComplete="off">

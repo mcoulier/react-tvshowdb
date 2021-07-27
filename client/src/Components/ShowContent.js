@@ -8,10 +8,10 @@ import clockIcon from "../assets/clockIcon.png";
 import theaterIcon from "../assets/theater.png";
 import starIcon from "../assets/star.png";
 
-import { Typography, Snackbar } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MuiAlert from "@material-ui/lab/Alert";
 import PopUp from "./PopUp";
+import SnackBar from "./SnackBar";
 
 const useStyles = makeStyles((theme) => ({
   heartIcon: {
@@ -89,27 +89,12 @@ export const ShowContent = ({ data }) => {
     setOpen(false);
   };
 
+  const snackClose = () => {
+    setSnackOpen(false);
+  };
+
   return (
     <>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackOpen(false)}
-      >
-        {IsShowLiked ? (
-          <MuiAlert variant="filled" severity="warning">
-            Show already liked!
-          </MuiAlert>
-        ) : (
-          <MuiAlert variant="filled" severity="success">
-            Show liked!
-          </MuiAlert>
-        )}
-      </Snackbar>
       <Typography className={classes.title} variant="h4">
         {data.name}{" "}
         <img
@@ -117,6 +102,7 @@ export const ShowContent = ({ data }) => {
           src={heartIcon}
           className={classes.heartIcon}
           width="30px"
+          height="30px"
           alt="heart icon"
         />
       </Typography>
@@ -157,6 +143,11 @@ export const ShowContent = ({ data }) => {
         )}
       </div>
       <PopUp open={open} handleClose={handleClose} />
+      <SnackBar
+        IsShowLiked={IsShowLiked}
+        snackOpen={snackOpen}
+        onclose={snackClose}
+      />
     </>
   );
 };

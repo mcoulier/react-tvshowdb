@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
     borderTop: "1px solid",
     borderBottom: "1px solid",
+    "& a": {
+      textDecoration: "none",
+    },
   },
   showLikes: {
     border: "solid #242423",
@@ -125,7 +128,11 @@ export const UserDetail = () => {
         )}
       </div>
       <div className={classes.lowerProfile}>
-        <Button onClick={deleteUser} startIcon={<DeleteIcon />}>
+        <Button
+          variant="contained"
+          onClick={deleteUser}
+          startIcon={<DeleteIcon />}
+        >
           Delete Account
         </Button>
       </div>

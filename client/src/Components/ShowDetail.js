@@ -17,13 +17,11 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "10px",
     paddingBottom: "10px",
     background: `#242423`,
-    color: "#F5CB5C",
+    color: `${theme.palette.primary.main}`,
     width: "auto",
     justifyContent: "center",
     "& > img": {
       margin: "10px",
-      maxWidth: "400px",
-      maxHeight: "800px",
     },
   },
   showContent: {
@@ -31,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    maxWidth: "420px",
-    minWidth: "300px",
+    maxWidth: "400px",
     textAlign: "center",
   },
 }));
@@ -60,6 +57,8 @@ export default function ShowDetail() {
   return (
     <div className={classes.root}>
       <img
+        width="400px"
+        height="588px"
         src={
           data && data.image && Object.keys(data.image).length
             ? data.image.original

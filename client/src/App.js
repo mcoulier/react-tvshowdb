@@ -1,20 +1,20 @@
 import React, { useState, useCallback, useEffect, Suspense } from "react";
 
-import Main from "./Components/Main";
-import Header from "./Components/Header";
+import Main from "./components/Main";
+import Header from "./components/Header";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
-import PrivateRoute from "../src/Components/PrivateRoute";
+import PrivateRoute from "../src/components/PrivateRoute";
 import { makeStyles } from "@material-ui/core/styles";
-import Footer from "./Components/Footer";
+import Footer from "./components/Footer";
 import { AuthContext } from "./context/auth-context";
-import { UserDetail } from "./Components/UserDetail";
+import { UserDetail } from "./components/UserDetail";
 import { CircularProgress } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./styles/theme";
 
-const ShowDetail = React.lazy(() => import("./Components/ShowDetail"));
-const Auth = React.lazy(() => import("./Components/Auth"));
+const ShowDetail = React.lazy(() => import("./components/ShowDetail"));
+const Auth = React.lazy(() => import("./components/Auth"));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    color: `${theme.palette.primary.main}`,
   },
 }));
 
@@ -107,7 +108,7 @@ function App() {
             <Suspense
               fallback={
                 <div className={classes.spinner}>
-                  <CircularProgress style={{ color: "#F5CB5C" }} />
+                  <CircularProgress />
                 </div>
               }
             >
