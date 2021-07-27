@@ -16,6 +16,10 @@ import {
 const useStyles = makeStyles((theme) => ({
   table: {
     backgroundColor: theme.palette.action.selected,
+    "& a": {
+      color: `${theme.palette.primary.main}`,
+      textDecoration: "none",
+    },
   },
   spinner: {
     marginLeft: "auto",
@@ -41,17 +45,13 @@ export const UserLikes = ({ likes, handleDelete }) => {
             likes.map((like) => (
               <TableRow key={like._id}>
                 <TableCell>
-                  <Link
-                    to={`/shows/${like.showId}`}
-                    style={{ textDecoration: "none", color: "#F5CB5C" }}
-                  >
-                    {like.showName}
-                  </Link>
+                  <Link to={`/shows/${like.showId}`}>{like.showName}</Link>
                 </TableCell>
                 <TableCell align="right">{like.date}</TableCell>
                 <TableCell align="right">
                   <IconButton
-                    style={{ color: "#F5CB5C" }}
+                    color="primary"
+                    variant="contained"
                     size="small"
                     onClick={() => handleDelete(like.showId)}
                   >

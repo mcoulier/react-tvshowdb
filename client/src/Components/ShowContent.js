@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "row wrap",
   },
   genres: {
-    background: "#F5CB5C",
+    background: `${theme.palette.primary.main}`,
     borderRadius: "50px 50px 50px 50px / 50px 50px 50px 0px",
     color: "black",
     width: "fit-content",

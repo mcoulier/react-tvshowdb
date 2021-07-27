@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     justifyContent: "center",
     "& > img": {
-      width: "100vw",
       margin: "10px",
+      maxWidth: "400px",
+      maxHeight: "800px",
     },
   },
   showContent: {
@@ -61,11 +62,10 @@ export default function ShowDetail() {
       <img
         src={
           data && data.image && Object.keys(data.image).length
-            ? data.image.medium
+            ? data.image.original
             : defaultImg
         }
-        style={{ maxWidth: "400px", maxHeight: "800px" }}
-        alt="cover"
+        alt="show cover"
       />
       <div className={classes.showContent}>
         <ShowContent data={data} />

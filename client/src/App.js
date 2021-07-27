@@ -2,11 +2,7 @@ import React, { useState, useCallback, useEffect, Suspense } from "react";
 
 import Main from "./Components/Main";
 import Header from "./Components/Header";
-import {
-  Route,
-  Switch,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import PrivateRoute from "../src/Components/PrivateRoute";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,6 +10,8 @@ import Footer from "./Components/Footer";
 import { AuthContext } from "./context/auth-context";
 import { UserDetail } from "./Components/UserDetail";
 import { CircularProgress } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
+import { theme } from "./styles/theme";
 
 const ShowDetail = React.lazy(() => import("./Components/ShowDetail"));
 const Auth = React.lazy(() => import("./Components/Auth"));
@@ -83,7 +81,7 @@ function App() {
   }, [login]);
 
   useEffect(() => {
-    if ((token, tokenExpiration)) {
+    if (token && tokenExpiration) {
       const remainingTime = tokenExpiration.getTime() - new Date().getTime();
       logoutTimer = setTimeout(logout, remainingTime);
     } else {
@@ -103,24 +101,26 @@ function App() {
           logout,
         }}
       >
-        <Router>
-          <Header />
-          <Suspense
-            fallback={
-              <div className={classes.spinner}>
-                <CircularProgress style={{ color: "#F5CB5C" }} />
-              </div>
-            }
-          >
-            <Switch>
-              <Route exact path="/" component={Main} />
-              <Route exact path="/shows/:showId" component={ShowDetail} />
-              <Route exact path="/login" component={Auth} />
-              <PrivateRoute exact path="/user" component={UserDetail} />
-            </Switch>
-          </Suspense>
-          <Footer />
-        </Router>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Header />
+            <Suspense
+              fallback={
+                <div className={classes.spinner}>
+                  <CircularProgress style={{ color: "#F5CB5C" }} />
+                </div>
+              }
+            >
+              <Switch>
+                <Route exact path="/" component={Main} />
+                <Route exact path="/shows/:showId" component={ShowDetail} />
+                <Route exact path="/login" component={Auth} />
+                <PrivateRoute exact path="/user" component={UserDetail} />
+              </Switch>
+            </Suspense>
+            <Footer />
+          </Router>
+        </ThemeProvider>
       </AuthContext.Provider>
     </div>
   );

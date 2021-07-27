@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
     borderTop: "1px solid",
     borderBottom: "1px solid",
-    "& button": {
-      background: "#f5cb5c",
-    },
   },
   showLikes: {
     border: "solid #242423",
@@ -51,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   spinner: {
     marginLeft: "auto",
     marginRight: "auto",
-    color: "#F5CB5C",
+    color: `${theme.palette.primary.main}`,
   },
 }));
 
@@ -114,7 +111,9 @@ export const UserDetail = () => {
       <div className={classes.userInfo}>
         <Typography variant="h6">Hello {userData?.username}!</Typography>
         <Link to="/">
-          <Button onClick={auth.logout}>Logout</Button>
+          <Button variant="contained" color="primary" onClick={auth.logout}>
+            Logout
+          </Button>
         </Link>
       </div>
       <div className={classes.showLikes}>

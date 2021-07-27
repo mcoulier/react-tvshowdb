@@ -10,10 +10,10 @@ import dinoIcon from "../assets/dino.png";
 const useStyles = makeStyles((theme) => ({
   form: {
     "& .MuiFormLabel-root": {
-      color: "#f5cb5c",
+      color: `${theme.palette.primary.main}`,
     },
     "& .MuiInput-underline::after": {
-      borderColor: "#f5cb5c",
+      borderColor: `${theme.palette.primary.main}`,
     },
     "& .MuiInputBase-input": {
       color: "#fafafa",
@@ -35,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   formLower: {
-    marginTop: "5px",
-    color: "#f5cb5c",
+    color: `${theme.palette.primary.main}`,
   },
 }));
 
@@ -73,16 +72,19 @@ export default function Auth() {
       }
     } else {
       try {
-        const response = await fetch("https://tvshowdb.herokuapp.com/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        });
+        const response = await fetch(
+          "https://tvshowdb.herokuapp.com/api/users/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          }
+        );
         const responseData = await response.json();
         auth.login(
           responseData.userId,
@@ -177,8 +179,8 @@ export default function Auth() {
                   margin="normal"
                 />
                 <Button
-                  style={{ background: "#f5cb5c", marginTop: "10px" }}
                   variant="contained"
+                  color="primary"
                   disabled={isSubmitting}
                   type="submit"
                 >

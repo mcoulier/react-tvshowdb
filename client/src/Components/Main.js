@@ -11,16 +11,19 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     "& .MuiFormLabel-root": {
-      color: "#f5cb5c",
+      color: `${theme.palette.primary.main}`,
     },
     "& .MuiOutlinedInput-root.Mui-focused fieldset": {
-      borderColor: "#f5cb5c",
+      borderColor: `${theme.palette.primary.main}`,
     },
     "& .MuiInputBase-input": {
       color: "#fafafa",
     },
     "& form": {
-      margin: "20px",
+      margin: "30px",
+      "& button": {
+        marginTop: "10px",
+      },
     },
   },
   showList: {
@@ -35,8 +38,12 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px",
     width: "210px",
     textAlign: "center",
-    color: "#F5CB5C",
+    color: `${theme.palette.primary.main}`,
     border: "3px solid",
+    "& a": {
+      color: `${theme.palette.primary.main}`,
+      textDecoration: "none",
+    },
   },
 }));
 
@@ -71,11 +78,12 @@ export default function Main() {
     e.preventDefault();
   };
 
+  console.log(data)
+
   return (
     <div className={classes.root}>
-      <form onSubmit={handleSubmit} autocomplete="off">
+      <form onSubmit={handleSubmit} autoComplete="off">
         <TextField
-          style={{ margin: 8, color: "white" }}
           label="Search show"
           id="search"
           fullWidth
@@ -84,9 +92,9 @@ export default function Main() {
           onChange={handleInput}
         />
         <Button
-          style={{ backgroundColor: "#f5cb5c", marginLeft: "8px" }}
           type="submit"
           variant="contained"
+          color="primary"
           startIcon={
             <img
               src={remoteIcon}
@@ -96,7 +104,7 @@ export default function Main() {
             />
           }
         >
-          Search{" "}
+          Search
         </Button>
       </form>
       <section className={classes.showList}>
@@ -104,17 +112,14 @@ export default function Main() {
           data.map((show, index) => (
             <div className={classes.showCard} key={show.show.id}>
               {show.show && (
-                <Link
-                  to={`/shows/${show.show.id}`}
-                  style={{ textDecoration: "none", color: "#F5CB5C" }}
-                >
+                <Link to={`/shows/${show.show.id}`}>
                   <ShowList show={show.show} />
                 </Link>
               )}
             </div>
           ))
         ) : (
-          <Typography>No shows found</Typography>
+          <Typography color="primary">No shows found. Try again!</Typography>
         )}
       </section>
     </div>

@@ -24,11 +24,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     flexGrow: 1,
     display: "flex",
-    color: "#f5cb5c",
     textDecoration: "none",
-    "&:hover": {
-      color: "#c2910a",
-    },
+    alignItems: "center",
   },
 }));
 
@@ -42,14 +39,18 @@ export default function Header() {
         <Toolbar>
           <Link to="/" className={classes.title}>
             <img src={cave} width="40px" height="40px" alt="cave" />
-            <Typography style={{ marginTop: "10px" }} variant="h5">
+            <Typography
+              style={{ marginTop: "10px" }}
+              color="primary"
+              variant="h5"
+            >
               ZapZilla
             </Typography>
           </Link>
           {auth.isLoggedIn ? (
             <IconButton
               className={classes.loginBtn}
-              style={{ background: "#f5cb5c" }}
+              color="primary"
               variant="contained"
               component={Link}
               to="/user"
@@ -60,7 +61,8 @@ export default function Header() {
             <Button
               component={Link}
               to="/login"
-              style={{ background: "#f5cb5c" }}
+              color="primary"
+              variant="contained"
             >
               Log In / Register
             </Button>

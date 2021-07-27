@@ -18,12 +18,15 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: "30%",
     borderRadius: "12px",
-    border: "1px solid #f5cb5c",
+    border: `1px solid ${theme.palette.primary.main}`,
     width: "auto",
     padding: "1rem",
     height: "150px",
     backgroundColor: "#18181B",
     color: "#fff",
+    "& a": {
+      marginTop: "10px",
+    },
   },
 }));
 
@@ -33,11 +36,12 @@ export default function PopUp({ open, handleClose }) {
     <Modal open={open} onClose={handleClose} className={classes.root}>
       <div className={classes.modal}>
         <Typography>Log in or Register to like shows!</Typography>
-        <img height="70px" src={bffIcon} alt="bff icon" />
+        <img height="70px" width="70px" src={bffIcon} alt="bff icon" />
         <Button
           component={Link}
           to="/login"
-          style={{ background: "#f5cb5c", marginTop: "10px" }}
+          color="primary"
+          variant="contained"
         >
           Log in / Register
         </Button>
