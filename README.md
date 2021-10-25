@@ -4,6 +4,10 @@
 
 React application that queries the [TVmaze API](https://www.tvmaze.com/api). Clicking on show image will send you to a detailed show page. Registered users can like shows to save them. On personal user page there is an overview of liked shows and the ability to delete them.
 
+## Live Preview
+
+https://zapzilla.netlify.app/
+
 ## Built With
 
 * [React](https://reactjs.org/)
