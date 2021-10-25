@@ -1,8 +1,21 @@
 # Discover TV shows
 
-<img src="https://raw.githubusercontent.com/mcoulier/react-tvshowdb/master/client/src/assets/zapzilla.png"></img>
+![landing](client/src/assets/zapzilla.png)
 
-React application that queries the [TVmaze API](https://www.tvmaze.com/api). Clicking on show image will send you to a detailed show page. Users can like shows to save them. On personal user page there is an overview of liked shows and the ability to delete them.
+React application that queries the [TVmaze API](https://www.tvmaze.com/api). Clicking on show image will send you to a detailed show page. Registered users can like shows to save them. On personal user page there is an overview of liked shows and the ability to delete them.
+
+## Built With
+
+* [React](https://reactjs.org/)
+* [Express](https://expressjs.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [JWT](https://jwt.io/)
+* [Material-UI](https://mui.com/)
+* [Formik](https://formik.org/)
+
+## Lighthouse Score
+
+![lightscore](client/src/assets/zaplight.png)
 
 ## To do
 
